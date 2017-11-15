@@ -1,4 +1,10 @@
-﻿/* Bootstrap override: */
+﻿/* Fixes IE11 incompatibilities with Bootstrap and the scrollbar. */
+body 
+{
+    -ms-overflow-style: scrollbar;
+}
+
+/* Bootstrap override: */
 .navbar
 {
     margin-bottom: 0px;

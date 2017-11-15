@@ -1,0 +1,28 @@
+﻿.image-responsive
+{
+    height: auto;
+    width: 100%;
+}
+
+.mobile-photos 
+{
+    display: none;
+}
+
+.hide-mobile 
+{
+    display: initial;
+}
+
+@media (max-width: 500px) 
+{
+    .mobile-photos 
+    {
+        display: block;
+    }
+
+    .hide-mobile
+    {
+        display: none;
+    }
+}
