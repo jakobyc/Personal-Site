@@ -1,5 +1,3 @@
-loadLayout();
-
 // Search for a <nav> tag and populate it's inner HTML. 
 function loadNavBar()
 {
@@ -17,8 +15,8 @@ function loadNavBar()
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a class="active" href="index.html">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
+                <li><a href="index.html" id="navHome">Home</a></li>
+                <li><a href="projects.html" id="navProjects">Projects</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -38,7 +36,7 @@ function loadNavBar()
 }
 
 // Search for a <footer> tag and populate it's inner HTML. 
-function loadFooter(id)
+function loadFooter()
 {
     var tags = document.getElementsByTagName('footer');
     tags[0].innerHTML =
@@ -49,6 +47,11 @@ function loadFooter(id)
         </div>
     </div>
     `
+}
+
+function setActive(navLink)
+{
+    $(navLink).addClass("active");
 }
 
 function loadLayout()
