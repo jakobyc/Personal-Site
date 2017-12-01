@@ -1,0 +1,19 @@
+﻿#hiking-parallax
+{
+    background-image: url(../content/hiking1.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    border: 1px solid #222222;
+    height: 500px;
+}
+
+@media (max-width: 500px) 
+{
+    #hiking-parallax 
+    {
+        display: none;
+    }
+}

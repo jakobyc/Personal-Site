@@ -29,6 +29,12 @@
             Beyond programming, I'm also a big fan of wakeboarding, hiking, and rafting.
         </p>
     </div>
+
+    <div class="image-container" style="transition: all 2s;  transition-duration: 2s;">
+        <div id="hiking-parallax" class="parallax-responsive"></div>
+        <p class="image-text-bottom-left" id="hiking-parallax-caption" style="background-color: #222222; padding: 5px; display: none;">Chattanooga</p>
+    </div>
+
     <div class="theme-content">
         <h2>What kind of .NET development?</h2>
         <div class="theme-text-area">
@@ -81,5 +87,15 @@
 <script>
     loadLayout();
     setActive('#navHome');
+
+    $('#hiking-parallax').hover(function ()
+    {
+        $('#hiking-parallax-caption').css('display', '');
+    });
+
+    $('#hiking-parallax').mouseleave(function ()
+    {
+        $('#hiking-parallax-caption').css('display', 'none');
+    });
 </script>
 

@@ -88,15 +88,12 @@
     padding: 55px 60px;
 }
 
-
 .theme-content-dark 
 {
     background-color: #222222;
     color: white;
     padding: 55px 60px;
 }
-
-
 
 @media (max-width: 500px)
 {
