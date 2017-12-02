@@ -11,6 +11,12 @@ function loadNavBar()
                 '<span class="icon-bar"></span>' +
                 '<span class="icon-bar"></span>' +
             '</button>' +
+            '<a class="navbar-brand show-mobile" href="https://github.com/jakobyc" style="float: right; color: #83168e;">' +
+                '<i class="fa fa-lg fa-github" aria-hidden="true"></i>' +
+            '</a>' +
+            '<a class="navbar-brand show-mobile" href="https://www.linkedin.com/in/chad-jakoby-084599bb" style="float: right; color: #3570b3;">' +
+                '<i class="fa fa-lg fa-linkedin" aria-hidden="true"></i>' +
+            '</a>' +
         '</div>' +
         '<div class="navbar-collapse collapse">' +
             '<ul class="nav navbar-nav">' +
@@ -19,12 +25,12 @@ function loadNavBar()
             '</ul>' +
             '<ul class="nav navbar-nav navbar-right">' +
                 '<li>' +
-                    '<a class="theme-btn-git" href="https://github.com/jakobyc" target="_blank">' +
+                    '<a class="theme-btn-git hide-mobile" href="https://github.com/jakobyc" target="_blank">' +
                         '<i class="fa fa-lg fa-github" aria-hidden="true"></i>' +
                     '</a>' +
                 '</li>' +
                 '<li>' +
-                    '<a class="theme-btn-linkedin" href="https://www.linkedin.com/in/chad-jakoby-084599bb" target="_blank">' +
+                    '<a class="theme-btn-linkedin hide-mobile" href="https://www.linkedin.com/in/chad-jakoby-084599bb" target="_blank">' +
                         '<i class="fa fa-lg fa-linkedin" aria-hidden="true"></i>' +
                     '</a>' +
                 '</li>' +

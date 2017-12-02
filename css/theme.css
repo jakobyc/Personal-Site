@@ -86,6 +86,9 @@
 .theme-content
 {
     padding: 55px 60px;
+
+    border-top: 1px solid darkgrey;
+    border-bottom: 1px solid darkgrey;
 }
 
 .theme-content-dark 
@@ -93,6 +96,9 @@
     background-color: #222222;
     color: white;
     padding: 55px 60px;
+
+    border-top: 1px solid darkgrey;
+    border-bottom: 1px solid darkgrey;
 }
 
 @media (max-width: 500px)

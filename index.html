@@ -14,11 +14,12 @@
     <!--Nav bar -->
     <nav></nav>
     <div style="text-align: center;">
-        <img src="content/roadrunner_spotlight_jakoby.jpg" class="image-responsive hide-mobile" />
+        <img src="content/roadrunner_spotlight_jakoby.jpg" alt="" class="image-responsive hide-mobile" />
     </div>
     <div style="text-align: center;">
-        <img src="content/jakoby1.jpg" class="image-responsive mobile-photos"/>
+        <img src="content/jakoby1.jpg" alt="" class="image-responsive show-mobile"/>
     </div>
+    <div id="transition-test"></div>
     <!-- Content -->
     <div class="theme-content-dark">
         <h2>Who am I?</h2>
@@ -30,9 +31,9 @@
         </p>
     </div>
 
-    <div class="image-container" style="transition: all 2s;  transition-duration: 2s;">
+    <div class="image-container">
         <div id="hiking-parallax" class="parallax-responsive"></div>
-        <p class="image-text-bottom-left" id="hiking-parallax-caption" style="background-color: #222222; padding: 5px; display: none;">Chattanooga</p>
+        <p class="image-text-bottom-left" id="hiking-parallax-caption" style="background-color: #222222; padding: 5px;">Chattanooga</p>
     </div>
 
     <div class="theme-content">
@@ -87,15 +88,5 @@
 <script>
     loadLayout();
     setActive('#navHome');
-
-    $('#hiking-parallax').hover(function ()
-    {
-        $('#hiking-parallax-caption').css('display', '');
-    });
-
-    $('#hiking-parallax').mouseleave(function ()
-    {
-        $('#hiking-parallax-caption').css('display', 'none');
-    });
 </script>
 
