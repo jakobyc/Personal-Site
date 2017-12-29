@@ -25,12 +25,12 @@ function loadNavBar()
             '</ul>' +
             '<ul class="nav navbar-nav navbar-right">' +
                 '<li>' +
-                    '<a class="theme-btn-git hide-mobile" href="https://github.com/jakobyc" target="_blank">' +
+                    '<a class="theme-social-git hide-mobile" href="https://github.com/jakobyc" target="_blank">' +
                         '<i class="fa fa-lg fa-github" aria-hidden="true"></i>' +
                     '</a>' +
                 '</li>' +
                 '<li>' +
-                    '<a class="theme-btn-linkedin hide-mobile" href="https://www.linkedin.com/in/chad-jakoby-084599bb" target="_blank">' +
+                    '<a class="theme-social-linkedin hide-mobile" href="https://www.linkedin.com/in/chad-jakoby-084599bb" target="_blank">' +
                         '<i class="fa fa-lg fa-linkedin" aria-hidden="true"></i>' +
                     '</a>' +
                 '</li>' +

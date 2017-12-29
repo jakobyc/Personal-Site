@@ -13,7 +13,20 @@
     background: -o-linear-gradient(#83168e, #591c7c); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(#83168e, #591c7c); /* For Firefox 3.6 to 15 */
     background: linear-gradient(#83168e, #591c7c); /* Standard syntax */
+    border: 0;
     color: white;
+}
+
+.theme-social-git
+{
+    background: transparent;
+    color: #83168e !important;
+}
+
+.theme-social-linkedin 
+{
+    background: transparent;
+    color: #3570b3 !important;
 }
 
 .theme-btn-linkedin 
@@ -43,7 +56,8 @@
 
 .theme-content-header
 {
-    background-color: #222222;
+    background-color: #333333;
+    border: 1px solid #222222;
     color: white;
     padding: 25px;
     margin-bottom: 0px;
@@ -51,13 +65,15 @@
 
 .theme-list-group-item
 {
+    background-color: #333333;
+    color: white;
     border: 1px solid #222222;
 }
 
 .theme-list-group-item:hover
 {
-    background-color: #222222 !important;
-    color: white !important;
+    background-color: #222222;
+    border: 1px solid #333333;
 }
 
 .theme-list-group-item:focus 
@@ -93,12 +109,27 @@
 
 .theme-content-dark 
 {
-    background-color: #222222;
+    background-color: #333333;
     color: white;
     padding: 55px 60px;
 
     border-top: 1px solid darkgrey;
     border-bottom: 1px solid darkgrey;
+}
+
+.theme-background
+{
+    background-color: #222222;
+}
+
+.theme-breadcrumb-list
+{
+    background-color: #333333;
+}
+
+.theme-breadcrumb-item
+{
+    color: white;
 }
 
 @media (max-width: 500px)
@@ -110,8 +141,17 @@
 
     .theme-content-dark 
     {
-        background-color: #222222;
+        background-color: #333333;
         color: white;
         padding: 55px 15px;
     }
+}
+
+::-webkit-scrollbar {
+    background: #222222;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #333333;
 }
