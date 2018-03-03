@@ -112,7 +112,6 @@
     background-color: #333333;
     color: white;
     padding: 55px 60px;
-
     border-top: 1px solid darkgrey;
     border-bottom: 1px solid darkgrey;
 }
@@ -130,6 +129,12 @@
 .theme-breadcrumb-item
 {
     color: white;
+}
+
+.theme-column
+{
+    color: white;
+    background-color: #333333;
 }
 
 @media (max-width: 500px)

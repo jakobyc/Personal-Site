@@ -47,6 +47,13 @@
     transform: translate(-50%, -50%);
 }
 
+.image-text-bottom-wide
+{
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    margin: 0;
+}
 
 .show-mobile
 {
@@ -56,6 +63,26 @@
 .hide-mobile 
 {
     display: initial;
+}
+
+.column-container
+{
+    display: table;
+    width: 100%;
+}
+
+.column 
+{
+    display: table-cell;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+.column-icon 
+{
+    width: 10%;
+    text-align: center;
+    padding: 10px;
 }
 
 @media (max-width: 500px) 
