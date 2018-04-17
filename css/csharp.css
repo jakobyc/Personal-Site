@@ -1,0 +1,28 @@
+.code-box
+{
+    padding: 25px;
+    background: #808080;
+    font-size: 17px;
+    font-family: Consolas;
+}
+
+.code-box p 
+{
+    margin: 0;
+    white-space: pre-line;
+}
+
+.class 
+{
+    color: #4EC9B0;
+}
+
+.keyword
+{
+    color: #569CD6;
+}
+
+.tabbing
+{
+    padding-left: 25px;
+}

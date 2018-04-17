@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/master.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+
+    <title>Chad Jakoby</title>
+</head>
+<body class="theme-background">
+    <!--Nav bar -->
+    <nav></nav>
+    <br />
+    <div class="container">
+        <h1 class="theme-header">AdoWrapper Documentation</h1>
+        <div class="">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a class="theme-tab" data-toggle="tab" href="#datatables">DataTables</a>
+                </li>
+                <li>
+                    <a class="theme-tab" data-toggle="tab" href="#datareaders">DataReaders</a>
+                </li>
+                <li>
+                    <a class="theme-tab" data-toggle="tab" href="#non-queries">Non-queries</a>
+                </li>
+            </ul>
+            <div class="tab-content theme-content-dark">
+                <div id="datatables" class="tab-pane fade in active">
+                    <div class="code-container">
+                        <h2>DataTables</h2>
+                        <hr />
+                        <h3>SQL Server Example:</h3>
+                        <div class="code-box">
+                        <p>public TestRepository : SqlRepository
+                            {
+                                &emsp;public TestRepository() : base("ConnectionStringName") { }
+
+                                &emsp;// Without parameters:
+                                &emsp;public DataTable GetUsers()
+                                &emsp;{
+                                &emsp;&emsp;return GetDataTable("SELECT * FROM Users");
+                                &emsp;}
+
+                                &emsp;// With parameters:
+                                &emsp;public DataTable GetUser(string name)
+                                &emsp;{
+                                &emsp;&emsp;IDictionary&lt;string, object&gt; parameters = new Dictionary&lt;string, object&gt;()
+                                &emsp;&emsp;{
+                                &emsp;&emsp;&emsp;{ "@id", id },
+                                &emsp;&emsp;&emsp;{ "@name", name },
+                                &emsp;&emsp;&emsp;{ "@email", email }
+                                &emsp;&emsp;};
+                                &emsp;&emsp;return GetDataTable(@"
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;SELECT *
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;FROM Users
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;WHERE Id = @id
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;AND Name = @name
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;AND Email = @email", parameters);
+                                &emsp;}
+                            }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div id="datareaders" class="tab-pane fade">
+                    <h2>DataReaders</h2>
+                    <hr />
+                    <h3>With mapping:</h3>
+                    <div class="code-box">
+                        <p>// DTO:
+                            public class User
+                            {
+                            &nbsp;[Column("Id")]
+                            &nbsp;public string Id { get; set; }
+                            &nbsp;[Column("Name")]
+                            &nbsp;public string DisplayName { get; set; }
+                            &nbsp;[Column("Email")]
+                            &nbsp;public string Email { get; set; }
+
+                            &nbsp;[Column("Confirmed")]
+                            &nbsp;public bool EmailConfirmed { get; set; }
+
+                            &nbsp;[Column("JoinedOn")]
+                            &nbsp;public DateTime JoinedDate { get; set; }
+                            }
+
+                            public ICollection&lt;User&gt; GetUsers()
+                            {
+                            &nbsp;return Execute&lt;User&gt;("SELECT * FROM Users");
+                            }
+                        </p>
+                    </div>
+                    <h3>Without mapping:</h3>
+                    <div class="code-box">
+                        <p>public ICollection&lt;User&gt; GetUsers()
+                            {
+                            &nbsp;ICollection&lt;User&gt; users = new List&lt;User&gt;();
+
+                            &nbsp;using (IDbConnection connection = CreateConnection())
+                            &nbsp;{
+                            &nbsp;&nbsp;using (IDbCommand command = CreateCommand(connection, "SELECT * FROM Users"))
+                            &nbsp;&nbsp; {
+                            &nbsp;&nbsp;&nbsp;using (IDataReader reader = command.ExecuteReader())
+                            &nbsp;&nbsp;&nbsp;{
+                            &nbsp;&nbsp;&nbsp;&nbsp;while (reader.Read())
+                            &nbsp;&nbsp;&nbsp;&nbsp;{
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Mapping logic:
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User user = new User();
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user.Id = reader["Id"].ToString();
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user.DisplayName = reader["Name"].ToString();
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user.Email = reader["Email"].ToString();
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user.EmailConfirmed = Convert.ToBoolean(reader["Confirmed"]);
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user.JoinedDate = Convert.ToDateTime(reader["JoinedOn"]);
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;users.Add(user);
+                            &nbsp;&nbsp;&nbsp;&nbsp;}
+                            &nbsp;&nbsp;&nbsp;}
+                            &nbsp;&nbsp;}
+                            &nbsp;}
+                            &nbsp;return users;
+                            }
+                        </p>
+                    </div>
+                </div>
+                <div id="non-queries" class="tab-pane fade">
+                    <h2>Non-queries</h2>
+                    <hr />
+                    <div class="code-box">
+                        <p style="white-space: pre-line;">
+                            public int AddUser(string name, string email)
+                            {
+                            &nbsp;IDictionary&lt;string, object&gt; parameters = new Dictionary&lt;string, object&gt;()
+                            &nbsp;{
+                            &nbsp;&nbsp;{ "@name", name },
+                            &nbsp;&nbsp;{ "@email", email }
+                            &nbsp;};
+                            &nbsp;return ExecuteNonQuery(@"
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT INTO Users (DisplayName, Email)
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALUES (@name, @email)", parameters);
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: -20px;"></footer>
+</body>
+</html>
+
+<script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.js" type="text/javascript"></script>
+<script src="js/layout.js" type="text/javascript"></script>
+
+<script>
+    loadLayout();
+    setActive('#navProjects');
+</script>
+

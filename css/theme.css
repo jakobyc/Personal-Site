@@ -6,6 +6,19 @@
     border-radius: 10px;
 }
 
+.theme-btn 
+{
+    background-color: #222222;
+    color: white;
+    border: 1px solid grey;
+}
+
+.theme-btn:hover 
+{
+    background-color: white;
+    color: #222222;
+}
+
 .theme-btn-git 
 {
     background: #83168e; /* For browsers that do not support gradients */
@@ -14,6 +27,31 @@
     background: -moz-linear-gradient(#83168e, #591c7c); /* For Firefox 3.6 to 15 */
     background: linear-gradient(#83168e, #591c7c); /* Standard syntax */
     border: 0;
+    color: white;
+}
+
+.theme-btn-git:hover 
+{
+    background: white;
+    color: #83168e;
+}
+
+.theme-btn-docs
+{
+    background: #3570b3;
+    border: 0;
+    color: white;
+}
+
+.theme-btn-docs:hover
+{
+    background: white;
+    color: #3570b3;
+}
+
+.theme-btn-linkedin 
+{
+    background-color: #3570b3;
     color: white;
 }
 
@@ -29,29 +67,9 @@
     color: #3570b3 !important;
 }
 
-.theme-btn-linkedin 
+.theme-tab
 {
-    background-color: #3570b3;
     color: white;
-}
-
-.theme-btn 
-{
-    background-color: #222222;
-    color: white;
-    border: 1px solid grey;
-}
-
-.theme-btn:hover 
-{
-    background-color: white;
-        color: #222222;
-}
-
-.theme-btn-git:hover 
-{
-    background: white;
-    color: #83168e;
 }
 
 .theme-content-header
@@ -135,6 +153,11 @@
 {
     color: white;
     background-color: #333333;
+}
+
+.theme-header
+{
+    color: white;
 }
 
 @media (max-width: 500px)
