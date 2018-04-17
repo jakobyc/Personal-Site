@@ -10,6 +10,8 @@
 {
     margin: 0;
     white-space: pre-line;
+    overflow-x: auto;
+    width: 100%;
 }
 
 .class 
@@ -24,5 +26,25 @@
 
 .tabbing
 {
-    padding-left: 25px;
+    padding-left: 15px;
+}
+
+.tabbing-2
+{
+    padding-left: 30px;
+}
+
+.tabbing-3
+{
+    padding-left: 45px;
+}
+
+.tabbing-4
+{
+    padding-left: 60px;
+}
+
+.tabbing-5
+{
+    padding-left: 75px;
 }
