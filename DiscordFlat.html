@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -39,8 +39,7 @@
                     <h2>WebSocket Client</h2>
                     <hr />
                     <div class="code-box">
-                        <p>
-                            DiscordWebSocketClient client = new DiscordWebSocketClient();
+                        <p>DiscordWebSocketClient client = new DiscordWebSocketClient();
                             DiscordGatewayBot bot = new DiscordGatewayBot("token");
 
                             bool connected = await bot.Connect(client);
@@ -67,8 +66,7 @@
                     <h2>OAuth2 Client</h2>
                     <hr />
                     <div class="code-box">
-                        <p>
-                            DiscordClient client = new DiscordClient();
+                        <p>DiscordClient client = new DiscordClient();
                             TokenResponse token = client.GetAccessToken("clientId", "clientSecret", "accessCode", "redirectUri");
 
                             // Guild Manager example:
@@ -120,27 +118,20 @@
 <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.js" type="text/javascript"></script>
 <script src="js/layout.js" type="text/javascript"></script>
+<script src="js/github.js" type="text/javascript"></script>
 
 <script>
     loadLayout();
     setActive('#navProjects');
 
-    $(document).ready(function ()
-    {
-        $.getJSON('https://api.github.com/users/jakobyc/repos', function (data)
-        {
-            $.each(data, function ()
-            {
-                if (this.id == '115229304')
-                {
-                    $('#url').text(this.url);
-                    $('#description').text(this.description);
-                    $('#language').text(this.language);
-                    $('#creation-date').text(this.created_at)
-                }
-            });
+    getRepo('jakobyc', 'DiscordFlat', format);
 
-        });
-    });
+    function format(data)
+    {
+        $('#url').text(data.url);
+        $('#description').text(data.description);
+        $('#language').text(data.language);
+        $('#creation-date').text(data.created_at);
+    }
 </script>
 

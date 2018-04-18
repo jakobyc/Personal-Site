@@ -44,8 +44,7 @@
                         <hr />
                         <h3>SQL Server Example:</h3>
                         <div class="code-box">
-                            <p>
-                                public TestRepository : SqlRepository
+                            <p>public TestRepository : SqlRepository
                                 {
                                 <span class="tabbing"></span>public TestRepository() : base("ConnectionStringName") { }
 
@@ -81,8 +80,7 @@
                     <hr />
                     <h3>With mapping:</h3>
                     <div class="code-box">
-                        <p>
-                            // DTO:
+                        <p>// DTO:
                             public class User
                             {
                             <span class="tabbing"></span>[Column("Id")]
@@ -107,8 +105,7 @@
                     </div>
                     <h3>Without mapping:</h3>
                     <div class="code-box">
-                        <p>
-                            public ICollection&lt;User&gt; GetUsers()
+                        <p>public ICollection&lt;User&gt; GetUsers()
                             {
                             <span class="tabbing"></span>ICollection&lt;User&gt; users = new List&lt;User&gt;();
 
@@ -142,8 +139,7 @@
                     <h2>Non-queries</h2>
                     <hr />
                     <div class="code-box">
-                        <p>
-                            public int AddUser(string name, string email)
+                        <p>public int AddUser(string name, string email)
                             {
                             <span class="tabbing"></span>IDictionary&lt;string, object&gt; parameters = new Dictionary&lt;string, object&gt;()
                             <span class="tabbing"></span>{
@@ -195,6 +191,7 @@
 <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.js" type="text/javascript"></script>
 <script src="js/layout.js" type="text/javascript"></script>
+<script src="js/github.js" type="text/javascript"></script>
 
 <script>
     loadLayout();
@@ -202,20 +199,15 @@
 
     $(document).ready(function ()
     {
-        $.getJSON('https://api.github.com/users/jakobyc/repos', function (data)
-        {
-                $.each(data, function ()
-                {
-                    if (this.id == '115161641')
-                    {
-                        $('#url').text(this.url);
-                        $('#description').text(this.description);
-                        $('#language').text(this.language);
-                        $('#creation-date').text(this.created_at)
-                    }
-                });
+        getRepo('jakobyc', 'AdoWrapper', format);
+    });
 
-            });
-        });
+    function format(data)
+    {
+        $('#url').text(data.url);
+        $('#description').text(data.description);
+        $('#language').text(data.language);
+        $('#creation-date').text(data.created_at);
+    }
 </script>
 
