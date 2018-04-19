@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -23,176 +23,201 @@
         <span class="breadcrumb-item-active"><span>GW2 REST API Wrapper</span></span>
     </div>
 
-    <div class="container">
-        <h1 class="theme-header">Documentation</h1>
-        <div>
-            <ul class="nav nav-tabs">
-                <li class="active">
-                    <a class="theme-tab" data-toggle="tab" href="#achievements">Achievements</a>
-                </li>
+    <div class="sidenav">
+        <a class="active-item" href="#examples">Examples</a>
+        <a href="#todo">TODO's</a>
+    </div>
 
-                <li>
-                    <a class="theme-tab" data-toggle="tab" href="#accounts">Accounts</a>
-                </li>
+    <div class="container sidenav-content">
+        <div class="sidenav-content-item active-item" id="examples">
+            <br />
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a class="theme-tab" data-toggle="tab" href="#achievements">Achievements</a>
+                    </li>
 
-                <li>
-                    <a class="theme-tab" data-toggle="tab" href="#characters">Characters</a>
-                </li>
+                    <li>
+                        <a class="theme-tab" data-toggle="tab" href="#accounts">Accounts</a>
+                    </li>
 
-                <li>
-                    <a class="theme-tab" data-toggle="tab" href="#skills">Skills</a>
-                </li>
+                    <li>
+                        <a class="theme-tab" data-toggle="tab" href="#characters">Characters</a>
+                    </li>
 
-            </ul>
-            <div class="tab-content theme-content-dark">
-                <!-- Achievements: -->
-                <div id="achievements" class="tab-pane fade in active">
-                    <div class="code-box">
-                        <p>AchievementRepository repository = new AchievementRepository("apiKey");
+                    <li>
+                        <a class="theme-tab" data-toggle="tab" href="#skills">Skills</a>
+                    </li>
 
-                            // Achievements:
-                            ICollection&lt;Achievement&gt; achievements = repository.GetAchievements("id", "id", "id", ...);
+                </ul>
+                <div class="tab-content theme-content-dark">
+                    <!-- Achievements: -->
+                    <div id="achievements" class="tab-pane fade in active">
+                        <div class="code-box">
+                            <p>
+                                AchievementRepository repository = new AchievementRepository("apiKey");
 
-                            // Categories:
-                            ICollection&lt;Category&gt; categories = repository.GetCategories();
-                        </p>
+                                // Achievements:
+                                ICollection&lt;Achievement&gt; achievements = repository.GetAchievements("id", "id", "id", ...);
+
+                                // Categories:
+                                ICollection&lt;Category&gt; categories = repository.GetCategories();
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Accounts: -->
+                    <div id="accounts" class="tab-pane fade">
+                        <div class="code-box">
+                            <p>
+                                AccountRepository repository = new AccountRepository("apiKey");
+
+                                // Achievements:
+                                ICollection&lt;AccountAchievement&gt; achievements = repository.GetAchievements();
+                                AccountAchievement achievement = repository.GetAchievement(achievementId);
+
+                                // Bank:
+                                ICollection&lt;BankItem&gt; bankItems = repository.GetBankItems();
+
+                                // Dungeons:
+                                ICollection&lt;string&gt; dungeons = repository.GetCompletedDailyDungeons();
+
+                                // Raids:
+                                ICollection&lt;string&gt; raids = repository.GetCompletedRaids();
+
+                                // Dyes:
+                                ICollection&lt;string&gt; dyes = repository.GetDyes();
+
+                                // Finishers:
+                                ICollection&lt;Finisher&gt; finishers = repository.GetFinishers();
+
+                                // Gliders:
+                                ICollection&lt;int&gt; gliders = repository.GetGliders();
+
+                                // Home
+                                ICollection&lt;Cat&gt; cats = repository.GetHomeCats();
+                                ICollection&lt;string&gt; nodes = repository.GetHomeNodes();
+
+                                // Carriers:
+                                ICollection&lt;int&gt; carriers = repository.GetMailCarriers();
+
+                                // Masteries:
+                                ICollection&lt;Mastery&gt; masteries = repository.GetMasteries();
+                                MasteryPoints points = repository.GetMasteryPoints();
+
+                                // Materials:
+                                ICollection&lt;Material&gt; materials = repository.GetMaterials();
+
+                                // Miniatures:
+                                ICollection&lt;string&gt; miniatures = repository.GetMiniatures();
+
+                                // Outfits:
+                                ICollection&lt;string&gt; outfits = repository.GetOutfits();
+
+                                // Heroes:
+                                ICollection&lt;int&gt; heroes = repository.GetPvPHeroes();
+
+                                // Recipes:
+                                ICollection&lt;string&gt; recipes = repository.GetRecipes();
+
+                                // Inventory:
+                                ICollection&lt;SharedInventoryItem&gt; items = repository.GetSharedInventoryItems();
+
+                                // Skins:
+                                ICollection&lt;string&gt; skins = repository.GetSkins();
+
+                                // Titles:
+                                ICollection&lt;string&gt; titles = repository.GetTitles();
+
+                                // Wallet:
+                                ICollection&lt;WalletCurrency&gt; wallet = repository.GetWallet();
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Characters: -->
+                    <div id="characters" class="tab-pane fade">
+                        <div class="code-box">
+                            <p>
+                                CharacterRepository repository = new CharacterRepository(apiKey);
+
+                                // Backstory:
+                                Backstory backstory = repository.GetBackstory("characterName");
+
+                                // Core Information:
+                                Core coreInfo = repository.GetCoreInformation("characterName");
+
+                                // Crafting Disciplines:
+                                CraftingInfo craftingInfo = repository.GetCraftingInformation("characterName");
+
+                                // Equipment:
+                                Equipment equipment = repository.GetEquipment("characterName");
+
+                                // Hero Points:
+                                ICollection&lt;string&gt; heroPoints = repository.GetHeroPoints("characterName");
+
+                                // Inventory:
+                                Inventory inventory = repository.GetInventory("characterName");
+
+                                // Skills:
+                                ICollection&lt;Skill&gt; pveSkills = repository.GetSkills("characterName", SkillType.PvE);
+                                ICollection&lt;Skill&gt; pvpSkills = repository.GetSkills("characterName", SkillType.PvP);
+                                ICollection&lt;Skill&gt; wvwSkills = repository.GetSkills("characterName", SkillType.WvW);
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Skills: -->
+                    <div id="skills" class="tab-pane fade">
+                        <div class="code-box">
+                            <p>
+                                SkillRepository repository = new SkillRepository(apiKey);
+
+                                ICollection&lt;Skill&gt; skill = repository.GetSkills(apiKey, "skillId", "skillId", "skillId", ...);
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <!-- Accounts: -->
-                <div id="accounts" class="tab-pane fade">
-                    <div class="code-box">
-                        <p>AccountRepository repository = new AccountRepository("apiKey");
+            </div>
 
-                            // Achievements:
-                            ICollection&lt;AccountAchievement&gt; achievements = repository.GetAchievements();
-                            AccountAchievement achievement = repository.GetAchievement(achievementId);
-
-                            // Bank:
-                            ICollection&lt;BankItem&gt; bankItems = repository.GetBankItems();
-
-                            // Dungeons:
-                            ICollection&lt;string&gt; dungeons = repository.GetCompletedDailyDungeons();
-
-                            // Raids:
-                            ICollection&lt;string&gt; raids = repository.GetCompletedRaids();
-
-                            // Dyes:
-                            ICollection&lt;string&gt; dyes = repository.GetDyes();
-
-                            // Finishers:
-                            ICollection&lt;Finisher&gt; finishers = repository.GetFinishers();
-
-                            // Gliders:
-                            ICollection&lt;int&gt; gliders = repository.GetGliders();
-
-                            // Home
-                            ICollection&lt;Cat&gt; cats = repository.GetHomeCats();
-                            ICollection&lt;string&gt; nodes = repository.GetHomeNodes();
-
-                            // Carriers:
-                            ICollection&lt;int&gt; carriers = repository.GetMailCarriers();
-
-                            // Masteries:
-                            ICollection&lt;Mastery&gt; masteries = repository.GetMasteries();
-                            MasteryPoints points = repository.GetMasteryPoints();
-
-                            // Materials:
-                            ICollection&lt;Material&gt; materials = repository.GetMaterials();
-
-                            // Miniatures:
-                            ICollection&lt;string&gt; miniatures = repository.GetMiniatures();
-
-                            // Outfits:
-                            ICollection&lt;string&gt; outfits = repository.GetOutfits();
-
-                            // Heroes:
-                            ICollection&lt;int&gt; heroes = repository.GetPvPHeroes();
-
-                            // Recipes:
-                            ICollection&lt;string&gt; recipes = repository.GetRecipes();
-
-                            // Inventory:
-                            ICollection&lt;SharedInventoryItem&gt; items = repository.GetSharedInventoryItems();
-
-                            // Skins:
-                            ICollection&lt;string&gt; skins = repository.GetSkins();
-
-                            // Titles:
-                            ICollection&lt;string&gt; titles = repository.GetTitles();
-
-                            // Wallet:
-                            ICollection&lt;WalletCurrency&gt; wallet = repository.GetWallet();
-                        </p>
+            <!-- Git stats: -->
+            <div class="theme-content-dark">
+                <h2>GitHub Stats:</h2>
+                <div>
+                    <div>
+                        <label><span class="glyphicon glyphicon-link"></span> Url:</label>
+                        <span id="url"></span>
                     </div>
-                </div>
-                <!-- Characters: -->
-                <div id="characters" class="tab-pane fade">
-                    <div class="code-box">
-                        <p>CharacterRepository repository = new CharacterRepository(apiKey);
 
-                            // Backstory:
-                            Backstory backstory = repository.GetBackstory("characterName");
-
-                            // Core Information:
-                            Core coreInfo = repository.GetCoreInformation("characterName");
-
-                            // Crafting Disciplines:
-                            CraftingInfo craftingInfo = repository.GetCraftingInformation("characterName");
-
-                            // Equipment:
-                            Equipment equipment = repository.GetEquipment("characterName");
-
-                            // Hero Points:
-                            ICollection&lt;string&gt; heroPoints = repository.GetHeroPoints("characterName");
-
-                            // Inventory:
-                            Inventory inventory = repository.GetInventory("characterName");
-
-                            // Skills:
-                            ICollection&lt;Skill&gt; pveSkills = repository.GetSkills("characterName", SkillType.PvE);
-                            ICollection&lt;Skill&gt; pvpSkills = repository.GetSkills("characterName", SkillType.PvP);
-                            ICollection&lt;Skill&gt; wvwSkills = repository.GetSkills("characterName", SkillType.WvW);
-                        </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-book"></span> Description:</label>
+                        <span id="description"></span>
                     </div>
-                </div>
-                <!-- Skills: -->
-                <div id="skills" class="tab-pane fade">
-                    <div class="code-box">
-                        <p>SkillRepository repository = new SkillRepository(apiKey);
 
-                            ICollection&lt;Skill&gt; skill = repository.GetSkills(apiKey, "skillId", "skillId", "skillId", ...);
-                        </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-text-background"></span> Language:</label>
+                        <span id="language"></span>
+                    </div>
+
+                    <div>
+                        <label><span class="glyphicon glyphicon-calendar"></span> Creation Date:</label>
+                        <span id="creation-date"></span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Git stats: -->
-        <div class="theme-content-dark">
-            <h2>GitHub Stats:</h2>
-            <div>
-                <div>
-                    <label><span class="glyphicon glyphicon-link"></span> Url:</label>
-                    <span id="url"></span>
-                </div>
-
-                <div>
-                    <label><span class="glyphicon glyphicon-book"></span> Description:</label>
-                    <span id="description"></span>
-                </div>
-
-                <div>
-                    <label><span class="glyphicon glyphicon-text-background"></span> Language:</label>
-                    <span id="language"></span>
-                </div>
-
-                <div>
-                    <label><span class="glyphicon glyphicon-calendar"></span> Creation Date:</label>
-                    <span id="creation-date"></span>
-                </div>
-            </div>
+        <div class="sidenav-content-item" id="todo">
+            <h3 class="theme-header">TODO:</h3>
+            <ol style="color: white;">
+                <li>
+                    Cross-reference API calls
+                    <ul>
+                        <li>I.e., cross-reference a received item Id with another call and return the results.</li>
+                    </ul>
+                </li>
+                <li>Support additional calls.</li>
+            </ol>
         </div>
     </div>
+
 
     <!-- Footer -->
     <footer style="margin-top: -20px;"></footer>
@@ -217,5 +242,30 @@
         $('#language').text(data.language);
         $('#creation-date').text(data.created_at);
     }
+
+    // TODO: Add to external .js
+    $('.sidenav a').click(function ()
+    {
+        if (!$(this).hasClass('active-item'))
+        {
+            // Get id of element to display:
+            var showId = $(this).attr('href');
+
+            // Remove all active-item classes:
+            $('.sidenav a').removeClass('active-item');
+            
+            // Hide displayed content:
+            $('.sidenav-content-item').hide();
+            //$('.sidenav-content.active-item').hide();
+
+            // Show element and set sidenav item to active:
+            $(showId).show();
+            $(this).addClass('active-item');
+
+
+            // Prevent href from moving to the top of the page:
+            return false;
+        }
+    });
 </script>
 

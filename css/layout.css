@@ -4,6 +4,46 @@ body
     -ms-overflow-style: scrollbar;
 }
 
+.breadcrumb-list 
+{
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 0;
+}
+
+.breadcrumb-item
+{
+    text-decoration: none;
+    padding: 5px;
+}
+
+.breadcrumb-item:hover 
+{
+    text-decoration: none;
+}
+
+.breadcrumb-item-active
+{
+    padding: 5px;
+    color: darkgrey;
+}
+
+.breadcrumb-item-active:hover
+{
+    text-decoration: none;
+}
+
+
+#footer
+{
+    padding-top: 30px;
+    padding-bottom: 10px;
+    margin-top: 20px;
+    background-color: #222222;
+    color: white;
+}
+
+
 /* Bootstrap override: */
 .navbar
 {
@@ -36,6 +76,64 @@ body
     color: #222222;
 }
 
+#nav-name 
+{
+    background-color: transparent;
+    color: white;
+}
+
+.sidenav
+{
+    position: absolute;
+    height: 100%;
+    width: 200px;
+    background-color: #333333;
+    overflow-x: hidden;
+    transition: 0.5s;
+    z-index: 5;
+}
+
+.sidenav a
+{
+    display: block;
+    color: white;
+    width: 100%;
+    padding: 15px;
+    border-bottom: 1px solid black;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.sidenav a:hover
+{
+    background-color: white;
+    color: black;
+}
+
+.sidenav a.active-item
+{
+    background-color: white;
+    color: black;
+    cursor: default;
+}
+
+.sidenav-content
+{
+    margin-left: 200px;
+}
+
+.sidenav-content-item
+{
+    display: none;
+}
+
+.sidenav-content-item.active-item
+{
+    display: initial;
+}
+
 /* Bootstrap override: */
 @media (min-width: 768px) 
 {
@@ -45,46 +143,17 @@ body
     }
 }
 
-#nav-name 
+@media (max-width: 500px) 
 {
-    background-color: transparent;
-    color: white;
-}
+    .sidenav
+    {
+        position: initial;
+        display: inline-block;
+        width: 100%;
+    }
 
-#footer 
-{
-    padding-top: 30px;
-    padding-bottom: 10px;
-    margin-top: 20px;
-    background-color: #222222;
-    color: white;
-}
-
-.breadcrumb-list
-{
-    padding: 15px;
-    border: 1px solid black;
-    border-radius: 0;
-}
-
-.breadcrumb-item
-{
-    text-decoration: none;
-    padding: 5px;
-}
-
-.breadcrumb-item:hover 
-{
-    text-decoration: none;
-}
-
-.breadcrumb-item-active
-{
-    padding: 5px;
-    color: darkgrey;
-}
-
-.breadcrumb-item-active:hover 
-{
-    text-decoration: none;
+    .sidenav-content
+    {
+        margin: 0;
+    }
 }
