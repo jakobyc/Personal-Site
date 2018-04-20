@@ -26,7 +26,7 @@ function showIssues(user, repo, element)
             '<label style="float: right;">@date</label>' +
             '<h3>(#@issueNumber) @title</h3>' +
             '<p>@body</p>' +
-            '<a target="_blank" href="@url">View on GitHub</a>' +
+            '<a class="btn theme-btn-git" target="_blank" href="@url">View on GitHub</a>' +
         '</div>';
 
     getIssues(user, repo, function(data)

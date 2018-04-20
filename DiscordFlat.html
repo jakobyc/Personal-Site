@@ -23,9 +23,13 @@
         <span class="breadcrumb-item-active"><span>DiscordFlat</span></span>
     </div>
 
-    <div class="container">
-        <h1 class="theme-header">DiscordFlat Documentation</h1>
-        <div class="">
+    <div class="sidenav">
+        <a class="active-item" href="#examples">Examples</a>
+        <a href="#issues">Issues</a>
+    </div>
+
+    <div class="container sidenav-content">
+        <div class="sidenav-content-item active-item" id="examples">
             <ul class="nav nav-tabs">
                 <li class="active">
                     <a class="theme-tab" data-toggle="tab" href="#websocket">WebSocket Client</a>
@@ -39,7 +43,8 @@
                     <h2>WebSocket Client</h2>
                     <hr />
                     <div class="code-box">
-                        <p>DiscordWebSocketClient client = new DiscordWebSocketClient();
+                        <p>
+                            DiscordWebSocketClient client = new DiscordWebSocketClient();
                             DiscordGatewayBot bot = new DiscordGatewayBot("token");
 
                             bool connected = await bot.Connect(client);
@@ -66,7 +71,8 @@
                     <h2>OAuth2 Client</h2>
                     <hr />
                     <div class="code-box">
-                        <p>DiscordClient client = new DiscordClient();
+                        <p>
+                            DiscordClient client = new DiscordClient();
                             TokenResponse token = client.GetAccessToken("clientId", "clientSecret", "accessCode", "redirectUri");
 
                             // Guild Manager example:
@@ -82,31 +88,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- Git stats: -->
-        <div class="theme-content-dark">
-            <h2>GitHub Stats:</h2>
-            <div>
-                <div>
-                    <label><span class="glyphicon glyphicon-link"></span> Url:</label>
-                    <span id="url"></span>
-                </div>
-
-                <div>
-                    <label><span class="glyphicon glyphicon-book"></span> Description:</label>
-                    <span id="description"></span>
-                </div>
-
-                <div>
-                    <label><span class="glyphicon glyphicon-text-background"></span> Language:</label>
-                    <span id="language"></span>
-                </div>
-
-                <div>
-                    <label><span class="glyphicon glyphicon-calendar"></span> Creation Date:</label>
-                    <span id="creation-date"></span>
-                </div>
-            </div>
+        <div class="sidenav-content-item" id="issues">
+            <br />
         </div>
     </div>
 
@@ -124,14 +107,11 @@
     loadLayout();
     setActive('#navProjects');
 
-    getRepo('jakobyc', 'DiscordFlat', format);
-
-    function format(data)
+    $(document).ready(function ()
     {
-        $('#url').text(data.url);
-        $('#description').text(data.description);
-        $('#language').text(data.language);
-        $('#creation-date').text(data.created_at);
-    }
+        enableSidenavClick();
+
+        showIssues('jakobyc', 'DiscordFlat', '#issues');
+    });
 </script>
 

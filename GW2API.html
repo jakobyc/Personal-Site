@@ -25,7 +25,7 @@
 
     <div class="sidenav">
         <a class="active-item" href="#examples">Examples</a>
-        <a href="#todo">TODO's</a>
+        <a href="#issues">Issues</a>
     </div>
 
     <div class="container sidenav-content">
@@ -54,8 +54,7 @@
                     <!-- Achievements: -->
                     <div id="achievements" class="tab-pane fade in active">
                         <div class="code-box">
-                            <p>
-                                AchievementRepository repository = new AchievementRepository("apiKey");
+                            <p>AchievementRepository repository = new AchievementRepository("apiKey");
 
                                 // Achievements:
                                 ICollection&lt;Achievement&gt; achievements = repository.GetAchievements("id", "id", "id", ...);
@@ -68,8 +67,7 @@
                     <!-- Accounts: -->
                     <div id="accounts" class="tab-pane fade">
                         <div class="code-box">
-                            <p>
-                                AccountRepository repository = new AccountRepository("apiKey");
+                            <p>AccountRepository repository = new AccountRepository("apiKey");
 
                                 // Achievements:
                                 ICollection&lt;AccountAchievement&gt; achievements = repository.GetAchievements();
@@ -136,8 +134,7 @@
                     <!-- Characters: -->
                     <div id="characters" class="tab-pane fade">
                         <div class="code-box">
-                            <p>
-                                CharacterRepository repository = new CharacterRepository(apiKey);
+                            <p>CharacterRepository repository = new CharacterRepository(apiKey);
 
                                 // Backstory:
                                 Backstory backstory = repository.GetBackstory("characterName");
@@ -167,8 +164,7 @@
                     <!-- Skills: -->
                     <div id="skills" class="tab-pane fade">
                         <div class="code-box">
-                            <p>
-                                SkillRepository repository = new SkillRepository(apiKey);
+                            <p>SkillRepository repository = new SkillRepository(apiKey);
 
                                 ICollection&lt;Skill&gt; skill = repository.GetSkills(apiKey, "skillId", "skillId", "skillId", ...);
                             </p>
@@ -177,7 +173,7 @@
                 </div>
             </div>
         </div>
-        <div class="sidenav-content-item" id="todo">
+        <div class="sidenav-content-item" id="issues">
             <br />
         </div>
     </div>
@@ -196,31 +192,11 @@
     loadLayout();
     setActive('#navProjects');
 
-    function format(data)
-    {
-        $.each(data, function ()
-        {
-            var template = $('#issue-template').html();
-            template = template.replace('@state', this.state);
-            template = template.replace('@title', this.title);
-            template = template.replace('@body', this.body);
-            template = template.replace('@issueNumber', this.number)
-            template = template.replace('@url', this.html_url);
-            template = template.replace('@date', this.created_at);
-            if (this.labels != null && this.labels.length > 0)
-            {
-                template = template.replace('@label', this.labels[0].name);
-            }
-            $('#todo').append(template);
-        });
-    }
-
     $(document).ready(function ()
     {
         enableSidenavClick();
 
-        showIssues('jakobyc', 'GuildWars2.NET', '#todo');
-        //getIssues('jakobyc', 'GuildWars2.NET', format)
+        showIssues('jakobyc', 'GuildWars2.NET', '#issues');
     });
 </script>
 

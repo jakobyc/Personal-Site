@@ -2,7 +2,7 @@
 function loadNavBar()
 {
     var tags = document.getElementsByTagName('nav');
-    tags[0].innerHTML =
+    tags[0].innerHTML = 
     '<div class="navbar navbar-inverse">' +
         '<div class="navbar-header">' +
             '<a class="navbar-brand" id="nav-name">Chad Jakoby</a>' +
@@ -78,6 +78,7 @@ function enableSidenavClick()
             //$('.sidenav-content.active-item').hide();
 
             // Show element and set sidenav item to active:
+            console.log(showId);
             $(showId).show();
             $(this).addClass('active-item');
 

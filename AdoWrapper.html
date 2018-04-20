@@ -23,9 +23,13 @@
         <span class="breadcrumb-item-active"><span>AdoWrapper</span></span>
     </div>
 
-    <div class="container">
-        <h1 class="theme-header">AdoWrapper Documentation</h1>
-        <div class="">
+    <div class="sidenav">
+        <a class="active-item" href="#examples">Examples</a>
+        <a href="#issues">Issues</a>
+    </div>
+
+    <div class="container sidenav-content">
+        <div class="sidenav-content-item active-item" id="examples"> 
             <ul class="nav nav-tabs">
                 <li class="active">
                     <a class="theme-tab" data-toggle="tab" href="#datatables">DataTables</a>
@@ -155,31 +159,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- Git stats: -->
-        <div class="theme-content-dark">
-            <h2>GitHub Stats:</h2>
-            <div>
-                <div>
-                    <label><span class="glyphicon glyphicon-link"></span> Url:</label>
-                    <span id="url"></span>
-                </div>
-
-                <div>
-                    <label><span class="glyphicon glyphicon-book"></span> Description:</label>
-                    <span id="description"></span>
-                </div>
-
-                <div>
-                    <label><span class="glyphicon glyphicon-text-background"></span> Language:</label>
-                    <span id="language"></span>
-                </div>
-
-                <div>
-                    <label><span class="glyphicon glyphicon-calendar"></span> Creation Date:</label>
-                    <span id="creation-date"></span>
-                </div>
-            </div>
+        <div class="sidenav-content-item" id="issues">
+            <br />
         </div>
     </div>
 
@@ -199,15 +180,9 @@
 
     $(document).ready(function ()
     {
-        getRepo('jakobyc', 'AdoWrapper', format);
-    });
+        enableSidenavClick();
 
-    function format(data)
-    {
-        $('#url').text(data.url);
-        $('#description').text(data.description);
-        $('#language').text(data.language);
-        $('#creation-date').text(data.created_at);
-    }
+        showIssues('jakobyc', 'AdoWrapper', '#issues');
+    });
 </script>
 
