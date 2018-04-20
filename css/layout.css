@@ -131,7 +131,7 @@ body
 
 .sidenav-content-item.active-item
 {
-    display: initial;
+    display: block;
 }
 
 /* Bootstrap override: */

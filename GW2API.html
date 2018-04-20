@@ -176,48 +176,11 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Git stats: -->
-            <div class="theme-content-dark">
-                <h2>GitHub Stats:</h2>
-                <div>
-                    <div>
-                        <label><span class="glyphicon glyphicon-link"></span> Url:</label>
-                        <span id="url"></span>
-                    </div>
-
-                    <div>
-                        <label><span class="glyphicon glyphicon-book"></span> Description:</label>
-                        <span id="description"></span>
-                    </div>
-
-                    <div>
-                        <label><span class="glyphicon glyphicon-text-background"></span> Language:</label>
-                        <span id="language"></span>
-                    </div>
-
-                    <div>
-                        <label><span class="glyphicon glyphicon-calendar"></span> Creation Date:</label>
-                        <span id="creation-date"></span>
-                    </div>
-                </div>
-            </div>
         </div>
-
         <div class="sidenav-content-item" id="todo">
-            <h3 class="theme-header">TODO:</h3>
-            <ol style="color: white;">
-                <li>
-                    Cross-reference API calls
-                    <ul>
-                        <li>I.e., cross-reference a received item Id with another call and return the results.</li>
-                    </ul>
-                </li>
-                <li>Support additional calls.</li>
-            </ol>
+            <br />
         </div>
     </div>
-
 
     <!-- Footer -->
     <footer style="margin-top: -20px;"></footer>
@@ -233,39 +196,31 @@
     loadLayout();
     setActive('#navProjects');
 
-    getRepo('jakobyc', 'GuildWars2.NET', format);
-
     function format(data)
     {
-        $('#url').text(data.url);
-        $('#description').text(data.description);
-        $('#language').text(data.language);
-        $('#creation-date').text(data.created_at);
+        $.each(data, function ()
+        {
+            var template = $('#issue-template').html();
+            template = template.replace('@state', this.state);
+            template = template.replace('@title', this.title);
+            template = template.replace('@body', this.body);
+            template = template.replace('@issueNumber', this.number)
+            template = template.replace('@url', this.html_url);
+            template = template.replace('@date', this.created_at);
+            if (this.labels != null && this.labels.length > 0)
+            {
+                template = template.replace('@label', this.labels[0].name);
+            }
+            $('#todo').append(template);
+        });
     }
 
-    // TODO: Add to external .js
-    $('.sidenav a').click(function ()
+    $(document).ready(function ()
     {
-        if (!$(this).hasClass('active-item'))
-        {
-            // Get id of element to display:
-            var showId = $(this).attr('href');
+        enableSidenavClick();
 
-            // Remove all active-item classes:
-            $('.sidenav a').removeClass('active-item');
-            
-            // Hide displayed content:
-            $('.sidenav-content-item').hide();
-            //$('.sidenav-content.active-item').hide();
-
-            // Show element and set sidenav item to active:
-            $(showId).show();
-            $(this).addClass('active-item');
-
-
-            // Prevent href from moving to the top of the page:
-            return false;
-        }
+        showIssues('jakobyc', 'GuildWars2.NET', '#todo');
+        //getIssues('jakobyc', 'GuildWars2.NET', format)
     });
 </script>
 

@@ -61,3 +61,30 @@ function loadLayout()
     loadNavBar();
     loadFooter();
 }
+
+// Add listeners to sidenav to toggle displayed content.
+function enableSidenavClick()
+{
+    $('.sidenav a').click(function () {
+        if (!$(this).hasClass('active-item')) {
+            // Get id of element to display:
+            var showId = $(this).attr('href');
+
+            // Remove all active-item classes:
+            $('.sidenav a').removeClass('active-item');
+
+            // Hide displayed content:
+            $('.sidenav-content-item').hide();
+            //$('.sidenav-content.active-item').hide();
+
+            // Show element and set sidenav item to active:
+            $(showId).show();
+            $(this).addClass('active-item');
+
+
+            // Prevent href from moving to the top of the page:
+            return false;
+        }
+    });
+}
+
