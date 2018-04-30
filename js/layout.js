@@ -78,7 +78,6 @@ function enableSidenavClick()
             //$('.sidenav-content.active-item').hide();
 
             // Show element and set sidenav item to active:
-            console.log(showId);
             $(showId).show();
             $(this).addClass('active-item');
 

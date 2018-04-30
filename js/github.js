@@ -9,6 +9,16 @@ function getRepo(user, repo, callback)
     });
 }
 
+
+// Return all repos for a user:
+function getRepos(user, callback)
+{
+    $.getJSON(baseUrl + "users/" + user + "/repos", function (data)
+    {
+        callback(data);
+    });
+}
+
 function getIssues(user, repo, callback)
 {
     $.getJSON(baseUrl + "repos/" + user + "/" + repo + "/issues", function (data)
@@ -29,22 +39,33 @@ function showIssues(user, repo, element)
             '<a class="btn theme-btn-git" target="_blank" href="@url">View on GitHub</a>' +
         '</div>';
 
+    const emptyString =
+        '<div class=well well-sm>' +
+            '<h3>No open issues exist for this repository.</h3>' +
+        '</div>';
+
     getIssues(user, repo, function(data)
     {
-        $.each(data, function ()
-        {
-            var template = templateString;
-            template = template.replace('@state', this.state);
-            template = template.replace('@title', this.title);
-            template = template.replace('@body', this.body);
-            template = template.replace('@issueNumber', this.number)
-            template = template.replace('@url', this.html_url);
-            template = template.replace('@date', this.created_at);
-            if (this.labels != null && this.labels.length > 0)
+        if (data.length > 0) {
+            $.each(data, function ()
             {
-                template = template.replace('@label', this.labels[0].name);
-            }
-            $(element).append(template);
-        });
+                var template = templateString;
+                template = template.replace('@state', this.state);
+                template = template.replace('@title', this.title);
+                template = template.replace('@body', this.body);
+                template = template.replace('@issueNumber', this.number)
+                template = template.replace('@url', this.html_url);
+                template = template.replace('@date', this.created_at);
+                if (this.labels != null && this.labels.length > 0)
+                {
+                    template = template.replace('@label', this.labels[0].name);
+                }
+                $(element).append(template);
+            });
+        }
+        else
+        {
+            $(element).append(emptyString);
+        }
     });
 }
