@@ -22,7 +22,7 @@
 
     <!-- Content -->
     <div class="container">
-        <h3 class="theme-content-header">Projects</h3>
+        <h1 class="theme-content-header">Projects</h1>
         <div>
             <ul class="list-group" id="repos">
                 <!--<li class="list-group-item theme-list-group-item">
@@ -113,12 +113,12 @@
                     '<h3 class="list-group-item-heading">' +
                         '<text>@repo</text>' +
                     '</h3>' +
-                    '<p class="list-group-item-text theme-list-group-item-text">' +
+                    '<div class="list-group-item-text theme-list-group-item-text">' +
                         '<h4>@description</h4>' +
                         '<p><b>Language:</b> @language</p>' +
                         '<a class="btn theme-btn-git" href= "@html_url" target="_blank">GitHub</a>' +
                         '<a class="btn theme-btn-docs" href="@wiki_url" target="_blank">Documentation</a>' +
-                    '</p>' +
+                    '</div>' +
                 '</li>';
 
             $.each(data, function ()
