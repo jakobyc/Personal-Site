@@ -25,78 +25,29 @@
         <h1 class="theme-content-header">Projects</h1>
         <div>
             <ul class="list-group" id="repos">
-                <!--<li class="list-group-item theme-list-group-item">
-                    <h3 class="list-group-item-heading">
-                        <text>AdoWrapper</text>
-                        <span class="badge">Factory</span>
-                        <span class="badge">ADO.NET</span>
-                        <span class="badge">C#</span>
-                    </h3>
-                    <p class="list-group-item-text theme-list-group-item-text">
-                        <a class="btn theme-btn-git" href="https://github.com/jakobyc/AdoWrapper" target="_blank">GitHub</a>
-                        <a class="btn theme-btn-docs" href="AdoWrapper.html">Documentation</a>
-                    </p>
-                </li>
-                <li class="list-group-item theme-list-group-item">
-                    <h3 class="list-group-item-heading">
-                        <text>Algorithms Repository</text>
-                        <span class="badge">Strategy</span>
-                        <span class="badge">MVC</span>
-                        <span class="badge">Java</span>
-                    </h3>
-                    <p class="list-group-item-text theme-list-group-item-text">
-                        <a class="btn theme-btn-git" href="https://github.com/jakobyc/Algorithms_Repository" target="_blank">GitHub</a>
-                    </p>
-                </li>
-                <li class="list-group-item theme-list-group-item">
-                    <h3 class="list-group-item-heading">
-                        <text>DiscordFlat</text>
-                        <span class="badge">API</span>
-                        <span class="badge">Discord</span>
-                        <span class="badge">C#</span>
-                    </h3>
-                    <p class="list-group-item-text theme-list-group-item-text">
-                        <a class="btn theme-btn-git" href="https://github.com/jakobyc/DiscordFlat" target="_blank">GitHub</a>
-                        <a class="btn theme-btn-docs" href="DiscordFlat.html">Documentation</a>
-                    </p>
-                </li>
-                <li class="list-group-item theme-list-group-item">
-                    <h3 class="list-group-item-heading">
-                        <text>ERP</text>
-                        <span class="badge">Strategy</span>
-                        <span class="badge">C#</span>
-                    </h3>
-                    <p class="list-group-item-text theme-list-group-item-text">
-                        <a class="btn theme-btn-git" href="https://github.com/jakobyc/ERP" target="_blank">GitHub</a>
-                    </p>
-                </li>
-                <li class="list-group-item theme-list-group-item">
-                    <h3 class="list-group-item-heading">
-                        <text>GW2 REST API Wrapper</text>
-                        <span class="badge">REST</span>
-                        <span class="badge">C#</span>
-                    </h3>
-                    <p class="list-group-item-text theme-list-group-item-text">
-                        <a class="btn theme-btn-git" href="https://github.com/jakobyc/GuildWars2.NET" target="_blank">GitHub</a>
-                        <a class="btn theme-btn-docs" href="GW2API.html">Documentation</a>
-                    </p>
-                </li>
-                <li class="list-group-item theme-list-group-item">
-                    <h3 class="list-group-item-heading">
-                        <text>SMTP Client Wrapper</text>
-                        <span class="badge">Adapter</span>
-                        <span class="badge">C#</span>
-                    </h3>
-                    <p class="list-group-item-text theme-list-group-item-text">
-                        <a class="btn theme-btn-git" href="https://github.com/jakobyc/SmtpClientWrapper" target="_blank">GitHub</a>
-                    </p>
-                </li>-->
+                
             </ul>
         </div>
     </div>
 
     <!-- Footer -->
     <footer></footer>
+    
+    <div class="template" style="display: none">
+        <div id="repo">
+            <li class="list-group-item theme-list-group-item">
+                <h3 class="list-group-item-heading">
+                    <text>@repo</text>
+                </h3>
+                <div class="list-group-item-text theme-list-group-item-text">
+                    <h4>@description</h4>
+                    <p><b>Language:</b> @language</p>
+                    <a class="btn theme-btn-git" href= "@html_url" target="_blank">GitHub</a>
+                    <a class="btn theme-btn-docs" href="@wiki_url" target="_blank">Documentation</a>
+                </div>
+            </li>
+        </div>
+    </div>
 </body>
 </html>
 
@@ -108,19 +59,8 @@
 <script>
     function format(data) {
         if (data.length > 0) {
-            var templateString =
-                '<li class="list-group-item theme-list-group-item">' +
-                    '<h3 class="list-group-item-heading">' +
-                        '<text>@repo</text>' +
-                    '</h3>' +
-                    '<div class="list-group-item-text theme-list-group-item-text">' +
-                        '<h4>@description</h4>' +
-                        '<p><b>Language:</b> @language</p>' +
-                        '<a class="btn theme-btn-git" href= "@html_url" target="_blank">GitHub</a>' +
-                        '<a class="btn theme-btn-docs" href="@wiki_url" target="_blank">Documentation</a>' +
-                    '</div>' +
-                '</li>';
-
+            var templateString = $('#repo').html();
+            
             $.each(data, function ()
             {
                 var template = templateString;
