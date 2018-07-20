@@ -1,8 +1,17 @@
 // Search for a <nav> tag and populate it's inner HTML. 
-function loadNavBar()
+function loadNavBar(callback)
 {
     var tags = document.getElementsByTagName('nav');
-    tags[0].innerHTML = 
+    $.get('layout/header.html', function(data)
+    {
+        tags[0].innerHTML = data;
+
+        if (callback)
+        {
+            callback();
+        }
+    });
+    /*tags[0].innerHTML = 
     '<div class="navbar navbar-inverse">' +
         '<div class="navbar-header">' +
             '<a class="navbar-brand" id="nav-name">Chad Jakoby</a>' +
@@ -36,19 +45,24 @@ function loadNavBar()
                 '</li>' +
             '</ul>' +
         '</div>' +
-    '</div>';
+    '</div>';*/
 }
 
 // Search for a <footer> tag and populate it's inner HTML. 
 function loadFooter()
 {
     var tags = document.getElementsByTagName('footer');
-    tags[0].innerHTML =
+    $.get('layout/footer.html', function(data)
+    {
+        $(tags[0]).html(data);
+        //tags[0].innerHTML = data;
+    });
+    /*tags[0].innerHTML =
     '<div id="footer">' +
         '<div class="container">' +
             '<p style="float: right">&copy; Chad Jakoby</p>' +
         '</div>' +
-    '</div>';
+    '</div>';*/
 }
 
 function setActive(navLink)
@@ -56,9 +70,11 @@ function setActive(navLink)
     $(navLink).addClass("active");
 }
 
-function loadLayout()
+
+// Callback is invoked after header is created
+function loadLayout(callback)
 {
-    loadNavBar();
+    loadNavBar(callback);
     loadFooter();
 }
 

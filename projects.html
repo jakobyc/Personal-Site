@@ -75,10 +75,10 @@
         }
     }
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+     {
+        loadLayout(function() { setActive('#navProjects'); });
+
         getRepos("jakobyc", format);
     });
-
-    loadLayout();
-    setActive('#navProjects');
 </script>

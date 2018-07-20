@@ -83,7 +83,10 @@
 <script src="js/layout.js" type="text/javascript"></script>
 
 <script>
-    loadLayout();
-    setActive('#navHome');
+    $(document).ready(function()
+    {
+        loadLayout(function() { setActive('#navHome'); });
+    });
+
 </script>
 
