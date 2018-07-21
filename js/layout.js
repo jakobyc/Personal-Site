@@ -1,18 +1,3 @@
-// Search for a <nav> tag and populate it's inner HTML. 
-function loadNavBar(callback)
-{
-    var tags = document.getElementsByTagName('nav');
-    $.get('layout/header.html', function(data)
-    {
-        tags[0].innerHTML = data;
-
-        if (callback)
-        {
-            callback();
-        }
-    });
-}
-
 // Search for a <footer> tag and populate it's inner HTML. 
 function loadFooter()
 {
@@ -20,6 +5,21 @@ function loadFooter()
     $.get('layout/footer.html', function(data)
     {
         tags[0].innerHTML = data;
+    });
+}
+
+// Search for a <nav> tag and populate it's inner HTML. 
+function loadNavBar(callback)
+{
+    var tags = document.getElementsByTagName('nav');
+    $.get('layout/navbar.html', function(data)
+    {
+        tags[0].innerHTML = data;
+
+        if (callback)
+        {
+            callback();
+        }
     });
 }
 
