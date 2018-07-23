@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -11,17 +11,9 @@
     <title>Chad Jakoby</title>
 </head>
 <body class="theme-background">
-    <!--Nav bar -->
     <nav></nav>
-    <div style="text-align: center;">
-        <img src="content/roadrunner_spotlight_jakoby.jpg" alt="Image Not Found" class="image-responsive hide-mobile" />
-    </div>
-    <div style="text-align: center;">
-        <img src="content/jakoby1.jpg" alt="Image Not Found" class="image-responsive show-mobile"/>
-    </div>
-    
-    <!-- Content -->
-    <br />
+
+    <!-- Content: -->
     <div class="container">
         <br/>
         <div class="column-container theme-column-container" id="info">
@@ -40,9 +32,9 @@
             </p>
 
             <div class="image-container">
-                <div id="hiking-parallax" class="parallax-responsive"></div>
-                <p class="image-text-bottom-wide" id="hiking-parallax-caption" style="background: rgba(0, 0, 0, 0.50); padding: 20px; font-size: 24px;">Chattanooga</p>
-            </div>
+                    <div id="hiking-parallax" class="parallax-responsive"></div>
+                    <p class="image-text-bottom-wide" id="hiking-parallax-caption" style="background: rgba(0, 0, 0, 0.50); padding: 20px; font-size: 24px;">Chattanooga</p>
+                </div>
         </div>
 
         <div class="column-container theme-column-container" id="info2">
@@ -91,13 +83,13 @@
         </div>
         <div class="theme-content-dark" id="info3-content">
             <p>
-                I enjoy working on some personal projects. Several are on my <a class="btn theme-btn-git" href="https://github.com/jakobyc" target="_blank">GitHub</a>. Feel free
+                I enjoy working on some personal projects. Several are on my <a class="btn theme-btn-git" href="https://github.com/jakobyc">GitHub</a>. Feel free
                 to check them out and contribute.
             </p>
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer: -->
     <footer></footer>
 </body>
 </html>
@@ -106,12 +98,10 @@
 <script src="js/bootstrap.js" type="text/javascript"></script>
 <script src="js/layout.js" type="text/javascript"></script>
 <script src="js/shared.js" type="text/javascript"></script>
-
 <script>
     $(document).ready(function()
     {
         loadLayout(function() { setActive('#navHome'); });
-
         collapse('#info', '#info-content', function() {
             toggleArrow('#info-icon');
          }
@@ -133,6 +123,6 @@
             $(element).toggleClass('fa-chevron-circle-right');
         };
     });
-
 </script>
 
+    

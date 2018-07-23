@@ -120,7 +120,7 @@
 
 .theme-content
 {
-    padding: 55px 60px;
+    padding: 25px 60px;
 
     border-top: 1px solid darkgrey;
     border-bottom: 1px solid darkgrey;
@@ -130,7 +130,7 @@
 {
     background-color: #333333;
     color: white;
-    padding: 55px 60px;
+    padding: 25px 60px;
     border-top: 1px solid darkgrey;
     border-bottom: 1px solid darkgrey;
 }
@@ -150,10 +150,40 @@
     color: white;
 }
 
-.theme-column
+.theme-column-container
 {
     color: white;
     background-color: #333333;
+    line-height: 0.5;
+}
+
+.theme-column-container .column-icon
+{
+    text-align: center;
+    font-size: 30px;
+    border-left: 1px solid white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}
+
+.theme-column-container:hover .column-icon
+{
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.theme-column-container:hover .column
+{
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.theme-column-container .column
+{
+    font-size: 30px;
+    border: 1px solid white;
 }
 
 .theme-header
@@ -165,14 +195,19 @@
 {
     .theme-content 
     {
-        padding: 55px 15px;
+        padding: 25px 15px;
     }
 
     .theme-content-dark 
     {
         background-color: #333333;
         color: white;
-        padding: 55px 15px;
+        padding: 25px 15px;
+    }
+
+    .theme-column-container
+    {
+        line-height: 1;
     }
 }
 
