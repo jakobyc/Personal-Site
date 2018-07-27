@@ -16,6 +16,7 @@
     <!-- Content: -->
     <div class="container">
         <br/>
+        <span id="collapse-all" class="fa fa-toggle-off" style="font-size: 24px; color: white;"></span>
         <div class="column-container theme-column-container" id="info">
             <div class="column-icon">
                 <span id="info-icon" class="fa fa-chevron-circle-down"></span>
@@ -89,6 +90,7 @@
         </div>
     </div>
 
+    </div>
     <!-- Footer: -->
     <footer></footer>
 </body>
@@ -122,7 +124,26 @@
             $(element).toggleClass('fa-chevron-circle-down');
             $(element).toggleClass('fa-chevron-circle-right');
         };
-    });
-</script>
 
-    
+        collapse('#collapse-all', '#info-content', function() {
+            toggleArrow('#info-icon');
+         }
+        );
+
+        collapse('#collapse-all', '#info2-content', function() {
+            toggleArrow('#info2-icon');
+         }
+        );
+
+        collapse('#collapse-all', '#info3-content', function() {
+            toggleArrow('#info3-icon');
+        }
+        );
+
+        $('#collapse-all').click(function()
+        {
+            $('#collapse-all').toggleClass('fa-toggle-off');
+            $('#collapse-all').toggleClass('fa-toggle-on');
+        });
+    });
+</script> 
