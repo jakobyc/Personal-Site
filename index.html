@@ -110,7 +110,8 @@
 <script>
     $(document).ready(function()
     {
-        loadLayout(function() { setActive('#navHome'); });
+        var layout = new Layout();
+        layout.load(function() { layout.setActive('#navHome'); });
 
         collapse('#info', '#info-content', function() {
             toggleArrow('#info-icon');

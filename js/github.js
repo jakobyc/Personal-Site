@@ -1,34 +1,52 @@
 const baseUrl = 'https://api.github.com/';
 
-// Return repo object from API:
-function getRepo(user, repo, callback)
+class GitHub
 {
-    $.getJSON(baseUrl + "repos/" + user + "/" + repo, function (data)
+    
+    constructor()
     {
-        callback(data);
-    });
+    }
+
+    // Return repo object from API:
+    getRepo(user, repo, callback)
+    {
+        $.getJSON(baseUrl + "repos/" + user + "/" + repo, function (data)
+        {
+            callback(data);
+        });
+    }
+
+    // Return all repos for a user:
+    getRepos(user, callback)
+    {
+        var cache = sessionStorage.getItem('repos');
+        if (!cache)
+        {
+            $.getJSON(baseUrl + "users/" + user + "/repos", function (data)
+            {
+                sessionStorage.setItem('repos', JSON.stringify(data));
+                callback(data);
+            });
+        }
+        else
+        {
+            cache = JSON.parse(cache);
+            callback(cache);
+        }
+    }
+
+    getIssues(user, repo, callback)
+    {
+        $.getJSON(baseUrl + "repos/" + user + "/" + repo + "/issues", function (data)
+        {
+            callback(data);
+        });
+    }
 }
 
-
-// Return all repos for a user:
-function getRepos(user, callback)
-{
-    $.getJSON(baseUrl + "users/" + user + "/repos", function (data)
-    {
-        callback(data);
-    });
-}
-
-function getIssues(user, repo, callback)
-{
-    $.getJSON(baseUrl + "repos/" + user + "/" + repo + "/issues", function (data)
-    {
-        callback(data);
-    });
-}
 
 // element = element to append the template to.
-function showIssues(user, repo, element)
+/*function showIssues(user, repo, element)
 {
     const templateString =
         '<div class="well well-sm">' +
@@ -68,4 +86,4 @@ function showIssues(user, repo, element)
             $(element).append(emptyString);
         }
     });
-}
+}*/

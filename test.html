@@ -100,10 +100,24 @@
 <script src="js/bootstrap.js" type="text/javascript"></script>
 <script src="js/layout.js" type="text/javascript"></script>
 <script src="js/shared.js" type="text/javascript"></script>
+<script src="js/github.js" type="text/javascript"></script>
 <script>
     $(document).ready(function()
     {
-        loadLayout(function() { setActive('#navHome'); });
+        /*var cache = localStorage.getItem("Test");
+        if (!cache)
+        {
+            localStorage.setItem("Test", "All the values.")
+            console.log('Cached.');
+        }
+        else
+        {
+            console.log('Cached content retrieved: ' + cache);
+        }*/
+
+        var layout = new Layout();
+        layout.load(function() { layout.setActive('#navHome'); });
+
         collapse('#info', '#info-content', function() {
             toggleArrow('#info-icon');
          }
