@@ -1,0 +1,19 @@
+.node-start
+{
+    background-color: lightgreen;
+}
+
+.node-end
+{
+    background-color: lightpink;
+}
+
+.node-traversed:not(.node-end)
+{
+    background-color: lightgreen;
+}
+.node
+{
+    min-width: 35px;
+    height: 35px;
+}

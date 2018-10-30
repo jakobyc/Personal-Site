@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="css/master.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/algorithms.css" />
+    <link rel="icon" href="content/favicon.png" type="image/x-icon">
+    <title>Bread-first Visualization</title>
+</head>
+<body class="theme-background">
+    <!--Nav bar -->
+    <nav></nav>
+
+    <!-- Content -->
+    <br />
+    <div class="container">
+        <div class="theme-content-dark">
+            <h3>Breadth-first Visualization</h3>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>Rows:</label>
+                    <input id="rows" class="form-control" value="25">
+                </div>
+                <div class="col-sm-2">
+                    <label>Columns:</label>
+                    <input id="columns" class="form-control" value="25">
+                </div>
+            </div>
+            <br/>
+            <div>
+                <table id="grid" class="table table-bordered" style="text-align: center;">
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer></footer>
+</body>
+</html>
+
+<script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.js" type="text/javascript"></script>
+<script src="js/layout.js" type="text/javascript"></script>
+<script src="js/shared.js" type="text/javascript"></script>
+<script src="js/algorithms.js" type="text/javascript"></script>
+
+<script>
+    $(document).ready(function()
+    {
+        var layout = new Layout();
+        layout.load(function() { layout.setActive('#navHome'); });
+
+        var graph = new Graph();
+        createGrid(graph);
+        $('#rows').change(function()
+        {
+            createGrid(graph);
+        });
+
+        $('#columns').change(function()
+        {
+            createGrid(graph);
+        });
+
+        var algorithm = new BreadthFirst();
+        var iteration = 1;
+        algorithm.onNodeComplete = function(node)
+        {
+            var htmlNode = $('.node').eq(node.id - 1);
+            htmlNode.addClass('node-traversed');
+            htmlNode.text(iteration);
+
+            iteration = iteration + 1;
+ 
+        };
+        algorithm.onCompletion = function(traversed)
+        {
+            console.log(traversed);
+        };
+        algorithm.beforeStart = function()
+        {
+            // Reset iteration on execution of algorithm:
+            iteration = 1;
+        }
+
+        function createGrid(graph)
+        {
+            var rows = $('#rows').val();
+            var columns = $('#columns').val();
+
+            if (rows > 0 && columns > 0)
+            {
+                // Create graph based off input for rows/columns:
+                var grid = graph.createGridGraph(parseInt(rows), parseInt(columns));
+
+                // Create table to match the graph:
+                var table = $('#grid');
+                var tbody = table.find('tbody');
+                // Clear tbody:
+                tbody.html('');
+                // Id that will be assigned via data attribute (used for quickily querying certain nodes like end nodes):
+                var id = 1;
+                for (i = 0; i < rows; i++)
+                {
+                    var tr = $('<tr>');
+                    for (c = 0; c < columns; c++)
+                    {
+                        var td = $('<td>')
+                        td.addClass('node');
+                        td.attr('data-id', id);
+
+                        tr.append(td);
+
+                        id = id + 1;
+                    }
+                    table.find('tbody').append(tr);
+                }
+
+                // Add listeners to new nodes:
+                $('.node').click(function(data)
+                {
+                    // Clear traversed nodes and previous ending node:
+                    $('.node-traversed').removeClass('node-traversed').text('');
+                    $('.node-end').removeClass('node-end').text('');
+
+                    $(this).addClass('node-end');
+                    var id = $(this).attr('data-id');
+
+                    // Execute algorithm:
+                    algorithm.execute(grid, 1, id);
+                });
+            }
+        }
+    });
+</script>
+
