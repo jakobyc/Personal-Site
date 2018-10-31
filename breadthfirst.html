@@ -17,14 +17,22 @@
 
     <!-- Content -->
     <br />
-    <div class="container not-selectable">
+    <div class="container">
         <div style="color: white;">
-            <h3>Breadth-first Visualization</h3>
-
+            <h2>Breadth-first Visualization</h2>
+            <hr/>
+            <div id="grid-controls">
+                <h3>Controls:</h3>
+                <ul>
+                    <li>Hold Left Click + Drag = Paint walls</li>
+                    <li>Left Click = Set endpoint</li>
+                    <li>Left Ctrl + Drag = Remove walls</li>
+                </ul>
+            </div>
             <div class="row">
                 <div class="col-sm-2">
                     <label>Rows:</label>
-                    <input id="rows" class="form-control" value="25">
+                    <input id="rows" class="form-control" value="20">
                 </div>
                 <div class="col-sm-2">
                     <label>Columns:</label>
@@ -34,11 +42,19 @@
                     <label>Speed:</label>
                     <input id="speed" type="range" value="60">
                 </div>
+                <div class="col-sm-offset-5 col-sm-1">
+                    <label>&nbsp;</label>
+                    <br/>
+                    <div style="display: inline;"> 
+                            <span id="clear-grid" class="fa fa-trash grid-icon"></span>
+                            <a href="https://en.wikipedia.org/wiki/Breadth-first_search" target="_blank" class="fa fa-question grid-icon"></a>
+                    </div>
+                </div>
             </div>
         </div>
 
         <br/>
-        <div>
+        <div class="not-selectable">
             <table id="grid" class="table table-bordered" style="text-align: center;">
                 <tbody>
                 </tbody>
@@ -71,6 +87,11 @@
         });
 
         $('#columns').change(function()
+        {
+            createGrid(graph);
+        });
+
+        $('#clear-grid').click(function()
         {
             createGrid(graph);
         });
@@ -140,10 +161,10 @@
             var rows = $('#rows').val();
             var columns = $('#columns').val();
 
-            if (rows > 0 && columns > 0)
+            if (rows > 0 && rows <= 25 && columns > 0 && columns <= 25)
             {
                 // Create graph based off input for rows/columns:
-                var grid = graph.createGridGraph(parseInt(rows), parseInt(columns));
+                var grid = graph.createGridGraph(parseInt(columns), parseInt(rows));
 
                 // Create table to match the graph:
                 var table = $('#grid');
@@ -171,22 +192,25 @@
                 // Add listeners to new nodes:
                 $('.node').click(function(data)
                 {
-                    // Clear traversed nodes and previous ending node:
-                    $('.node-traversed').removeClass('node-traversed').text('');
-                    $('.node-end').removeClass('node-end').text('');
-
-                    $(this).addClass('node-end');
-                    var id = $(this).attr('data-id');
-
-                    // Ids of walls (exclude from algorithm):
-                    var ids = [];
-                    $.each($('.node-wall'), function()
+                    if (!$(this).hasClass('node-wall'))
                     {
-                        ids.push($(this).attr('data-id'));
-                    });
+                        // Clear traversed nodes and previous ending node:
+                        $('.node-traversed').removeClass('node-traversed').text('');
+                        $('.node-end').removeClass('node-end').text('');
 
-                    // Execute algorithm:
-                    algorithm.execute(grid, 1, id, ids);
+                        $(this).addClass('node-end');
+                        var id = $(this).attr('data-id');
+
+                        // Ids of walls (exclude from algorithm):
+                        var ids = [];
+                        $.each($('.node-wall'), function()
+                        {
+                            ids.push($(this).attr('data-id'));
+                        });
+
+                        // Execute algorithm:
+                        algorithm.execute(grid, 1, id, ids);
+                    }
                 });
 
                 // Paint walls:

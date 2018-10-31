@@ -32,7 +32,7 @@ function BreadthFirst()
                 // If we haven't traversed this node yet, traverse it:
                 if (!hasTraversed(nextId, traversed) && !isCurrentlyQueued(nextId, queue))
                 {
-                    getNeighbors(queue, nextNode, traversed);
+                    queueNeighbors(queue, nextNode, traversed);
                 
                     traversed.push(nextId);
     
@@ -66,7 +66,7 @@ function BreadthFirst()
         }
     }
 
-    function getNeighbors(queue, node, traversed)
+    function queueNeighbors(queue, node, traversed)
     {
         if (node.neighbors && node.neighbors.length > 0)
         {
@@ -150,7 +150,7 @@ function Graph()
                 nodes.push(node);
             }
         }
-
+        
         return nodes;
     }
 }

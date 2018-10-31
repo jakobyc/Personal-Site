@@ -23,3 +23,20 @@
     min-width: 43px;
     height: 38px;
 }
+
+.grid-icon
+{
+    padding: 7px;
+    font-size: 30px;
+    color: white;
+    padding: 5px;
+    display: inline-block;
+}
+
+.grid-icon:hover, .grid-icon:active, .grid-icon:focus
+{
+    color: black;
+    background-color: white;
+    border-radius: 7px;
+    text-decoration: none;
+}

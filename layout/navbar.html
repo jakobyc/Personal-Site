@@ -16,7 +16,15 @@
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav" style="font-size: 20px;">
             <li><a href="index.html" id="navHome"><span class="fa fa-home"></span></a></li>
-            <li><a href="projects.html" id="navProjects">Projects</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" type="button" id="dropdown-projects" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                    Projects   
+                </a>  
+                <ul class="dropdown-menu" aria-labelledby="dropdown-projects">
+                    <li><a class="navbar-dropdown-item dropdown-item" href="projects.html">GitHub Repos</a></li>
+                    <li><a class="navbar-dropdown-item dropdown-item" href="breadthfirst.html">Visualization</a></li>
+                </ul>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
