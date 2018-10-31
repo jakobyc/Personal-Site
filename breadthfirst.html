@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/algorithms.css" />
     <link rel="icon" href="content/favicon.png" type="image/x-icon">
-    <title>Bread-first Visualization</title>
+    <title>Breadth-first Visualization</title>
 </head>
 <body class="theme-background">
     <!--Nav bar -->
@@ -17,8 +17,8 @@
 
     <!-- Content -->
     <br />
-    <div class="container">
-        <div class="theme-content-dark">
+    <div class="container not-selectable">
+        <div style="color: white;">
             <h3>Breadth-first Visualization</h3>
 
             <div class="row">
@@ -30,14 +30,19 @@
                     <label>Columns:</label>
                     <input id="columns" class="form-control" value="25">
                 </div>
+                <div class="col-sm-2">
+                    <label>Speed:</label>
+                    <input id="speed" type="range" value="60">
+                </div>
             </div>
-            <br/>
-            <div>
-                <table id="grid" class="table table-bordered" style="text-align: center;">
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+        </div>
+
+        <br/>
+        <div>
+            <table id="grid" class="table table-bordered" style="text-align: center;">
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -71,25 +76,64 @@
         });
 
         var algorithm = new BreadthFirst();
-        var iteration = 1;
+        var iteration = 1,  
+            // Used to control the speed at which the iterations are displayed:
+            renderIter = 0;
         algorithm.onNodeComplete = function(node)
         {
-            var htmlNode = $('.node').eq(node.id - 1);
-            htmlNode.addClass('node-traversed');
-            htmlNode.text(iteration);
+            var speed = $('#speed').val();
 
-            iteration = iteration + 1;
- 
+            renderIter = renderIter + 1;
+            setTimeout(function()
+            {
+                var htmlNode = $('.node').eq(node.id - 1);
+                htmlNode.addClass('node-traversed');
+                htmlNode.text(iteration);
+                iteration = iteration + 1;
+            }, ((100 - speed) * renderIter));
+
         };
         algorithm.onCompletion = function(traversed)
         {
-            console.log(traversed);
+            //console.log(traversed);
         };
         algorithm.beforeStart = function()
         {
             // Reset iteration on execution of algorithm:
             iteration = 1;
+            renderIter = 0;
         }
+
+        // Modify state for painting walls:
+        var painting = false;
+        var removing = false;
+        $(document).mousedown(function(e)
+        {
+            painting = true;
+        })
+
+        $(document).mouseup(function(e)
+        {
+            painting = false;
+        })
+
+        $(document).keydown(function(e)
+        {
+            // If left-ctrl is held, enable removing state:
+            if (e.keyCode == 17 || e.which == 17)
+            {
+                removing = true;
+            }
+            else
+            {
+                removing = false;
+            }
+        });
+
+        $(document).keyup(function(e)
+        {
+            removing = false;
+        });
 
         function createGrid(graph)
         {
@@ -134,8 +178,29 @@
                     $(this).addClass('node-end');
                     var id = $(this).attr('data-id');
 
+                    // Ids of walls (exclude from algorithm):
+                    var ids = [];
+                    $.each($('.node-wall'), function()
+                    {
+                        ids.push($(this).attr('data-id'));
+                    });
+
                     // Execute algorithm:
-                    algorithm.execute(grid, 1, id);
+                    algorithm.execute(grid, 1, id, ids);
+                });
+
+                // Paint walls:
+                $('.node').mouseenter(function()
+                {
+                    if (painting)
+                    {
+                        $(this).addClass('node-wall')
+                    }
+
+                    if (removing)
+                    {
+                        $(this).removeClass('node-wall')
+                    }
                 });
             }
         }

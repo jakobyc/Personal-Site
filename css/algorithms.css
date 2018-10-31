@@ -12,8 +12,14 @@
 {
     background-color: lightgreen;
 }
+
+.node-wall
+{
+    background-color: white;
+}
+
 .node
 {
-    min-width: 35px;
-    height: 35px;
+    min-width: 43px;
+    height: 38px;
 }

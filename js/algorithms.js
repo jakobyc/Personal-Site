@@ -6,7 +6,7 @@ function BreadthFirst()
     this.beforeStart;
 
     var proto = this;
-    BreadthFirst.prototype.execute = function(nodes, startId, endId)
+    BreadthFirst.prototype.execute = function(nodes, startId, endId, ids)
     {
         // Before Start callback:
         if (this.beforeStart && this.beforeStart instanceof Function)
@@ -15,8 +15,8 @@ function BreadthFirst()
         }
 
         // Store traversed nodes:
-        var traversed = [];
-
+        var traversed = ids || [];
+        
         // Queue for nodes:
         var queue = [];
         queue.push(startId);
