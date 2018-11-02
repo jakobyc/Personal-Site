@@ -80,83 +80,14 @@
         layout.load(function() { layout.setActive('#navHome'); });
 
         var graph = new Graph();
-        createGrid(graph);
-        $('#rows').change(function()
-        {
-            createGrid(graph);
-        });
+        createGrid(graph, addNodeEventListeners);
+        initGridIcons();
+        
+        var algorithm = initBreadthFirst();
+        initPainting(graph);
+        initRemoving(graph);
 
-        $('#columns').change(function()
-        {
-            createGrid(graph);
-        });
-
-        $('#clear-grid').click(function()
-        {
-            createGrid(graph);
-        });
-
-        var algorithm = new BreadthFirst();
-        var iteration = 1,  
-            // Used to control the speed at which the iterations are displayed:
-            renderIter = 0;
-        algorithm.onNodeComplete = function(node)
-        {
-            var speed = $('#speed').val();
-
-            renderIter = renderIter + 1;
-            setTimeout(function()
-            {
-                var htmlNode = $('.node').eq(node.id - 1);
-                htmlNode.addClass('node-traversed');
-                htmlNode.text(iteration);
-                iteration = iteration + 1;
-            }, ((100 - speed) * renderIter));
-
-        };
-        algorithm.onCompletion = function(traversed)
-        {
-            //console.log(traversed);
-        };
-        algorithm.beforeStart = function()
-        {
-            // Reset iteration on execution of algorithm:
-            iteration = 1;
-            renderIter = 0;
-        }
-
-        // Modify state for painting walls:
-        var painting = false;
-        var removing = false;
-        $(document).mousedown(function(e)
-        {
-            painting = true;
-        })
-
-        $(document).mouseup(function(e)
-        {
-            painting = false;
-        })
-
-        $(document).keydown(function(e)
-        {
-            // If left-ctrl is held, enable removing state:
-            if (e.keyCode == 17 || e.which == 17)
-            {
-                removing = true;
-            }
-            else
-            {
-                removing = false;
-            }
-        });
-
-        $(document).keyup(function(e)
-        {
-            removing = false;
-        });
-
-        function createGrid(graph)
+        function createGrid(graph, onSuccess)
         {
             var rows = $('#rows').val();
             var columns = $('#columns').val();
@@ -164,7 +95,7 @@
             if (rows > 0 && rows <= 25 && columns > 0 && columns <= 25)
             {
                 // Create graph based off input for rows/columns:
-                var grid = graph.createGridGraph(parseInt(columns), parseInt(rows));
+                var grid = graph.createGridGraph(parseInt(columns), parseInt(rows)).nodes;
 
                 // Create table to match the graph:
                 var table = $('#grid');
@@ -189,8 +120,105 @@
                     table.find('tbody').append(tr);
                 }
 
-                // Add listeners to new nodes:
-                $('.node').click(function(data)
+                if (onSuccess && onSuccess instanceof Function)
+                {
+                    onSuccess(graph);
+                }
+            }
+        }
+
+        function initGridIcons()
+        {
+            $('#rows').change(function()
+            {
+                createGrid(graph, addNodeEventListeners);
+            });
+
+            $('#columns').change(function()
+            {
+                createGrid(graph, addNodeEventListeners);
+            });
+
+            $('#clear-grid').click(function()
+            {
+                createGrid(graph, addNodeEventListeners);
+            });
+        }
+
+        function initBreadthFirst()
+        {
+            var algorithm = new BreadthFirst();
+            var iteration = 1,  
+                // Used to control the speed at which the iterations are displayed:
+                renderIter = 0;
+            algorithm.onNodeComplete = function(node)
+            {
+                var speed = $('#speed').val();
+
+                renderIter = renderIter + 1;
+                setTimeout(function()
+                {
+                    var htmlNode = $('.node').eq(node.id - 1);
+                    htmlNode.addClass('node-traversed');
+                    htmlNode.text(iteration);
+                    iteration = iteration + 1;
+                }, ((100 - speed) * renderIter));
+
+            };
+            algorithm.onCompletion = function(traversed)
+            {
+                //console.log(traversed);
+            };
+            algorithm.beforeStart = function()
+            {
+                // Reset iteration on execution of algorithm:
+                iteration = 1;
+                renderIter = 0;
+            }
+
+            return algorithm;
+        }
+        
+        // Initialize painting events for walls:
+        function initPainting(graph)
+        {
+            $(document).mousedown(function(e)
+            {
+                graph.state = GraphState.state.painting;
+            })
+
+            $(document).mouseup(function(e)
+            {
+                graph.state = GraphState.state.ready;
+            })
+        }
+
+        // Initialize removing events for walls:
+        function initRemoving(graph)
+        {
+            $(document).keydown(function(e)
+            {
+                // If left-ctrl is held, enable removing state:
+                if (e.keyCode == 17 || e.which == 17)
+                {
+                    graph.state = GraphState.state.removing;
+                }
+                else
+                {
+                    graph.state = GraphState.state.ready;
+                }
+            });
+
+            $(document).keyup(function(e)
+            {
+                graph.state = GraphState.state.ready;
+            });
+        }
+
+        function addNodeEventListeners(graph)
+        {
+            // Add endpoint and execute algorithm:
+             $('.node').click(function(data)
                 {
                     if (!$(this).hasClass('node-wall'))
                     {
@@ -209,24 +237,25 @@
                         });
 
                         // Execute algorithm:
-                        algorithm.execute(grid, 1, id, ids);
+                        algorithm.execute(graph.nodes, 1, id, ids);
                     }
                 });
 
-                // Paint walls:
-                $('.node').mouseenter(function()
+            // Paint walls:
+            $('.node').mouseenter(function()
+            {
+                var node = $(this);
+
+                switch(graph.state)
                 {
-                    if (painting)
-                    {
-                        $(this).addClass('node-wall')
-                    }
-
-                    if (removing)
-                    {
-                        $(this).removeClass('node-wall')
-                    }
-                });
-            }
+                    case(GraphState.state.painting):
+                        node.addClass('node-wall');
+                        break;
+                    case(GraphState.state.removing):
+                        node.removeClass('node-wall')
+                        break;
+                }
+            });
         }
     });
 </script>

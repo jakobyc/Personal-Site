@@ -105,6 +105,9 @@ function Node(id, neighbors)
 
 function Graph()
 {
+    this.nodes = [];
+    this.state = GraphState.state.ready;
+
     Graph.prototype.createGridGraph = function(columns, rows)
     {
         var nodes = [];
@@ -150,7 +153,14 @@ function Graph()
                 nodes.push(node);
             }
         }
-        
-        return nodes;
+
+        this.nodes = nodes;
+        return this;
     }
 }
+
+// Graph state for interacting with the graph:
+function GraphState()
+{
+}
+GraphState.state = Object.freeze({"painting":1,  "removing":2, "ready":3});
