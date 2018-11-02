@@ -52,7 +52,6 @@
                 </div>
             </div>
         </div>
-
         <br/>
         <div class="not-selectable">
             <table id="grid" class="table table-bordered" style="text-align: center;">
@@ -82,7 +81,7 @@
         var graph = new Graph();
         createGrid(graph, addNodeEventListeners);
         initGridIcons();
-        
+
         var algorithm = initBreadthFirst();
         initPainting(graph);
         initRemoving(graph);
@@ -95,7 +94,7 @@
             if (rows > 0 && rows <= 25 && columns > 0 && columns <= 25)
             {
                 // Create graph based off input for rows/columns:
-                var grid = graph.createGridGraph(parseInt(columns), parseInt(rows)).nodes;
+                graph.createGridGraph(parseInt(columns), parseInt(rows));
 
                 // Create table to match the graph:
                 var table = $('#grid');

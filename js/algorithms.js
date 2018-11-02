@@ -1,11 +1,11 @@
 function BreadthFirst()
 {
     this.onNodeComplete;
-    this.onNeighborDiscovery;
     this.onCompletion;
+    this.onNeighborDiscovery;
     this.beforeStart;
 
-    var proto = this;
+    // ids = Node IDs to ignore (marked as traversed):
     BreadthFirst.prototype.execute = function(nodes, startId, endId, ids)
     {
         // Before Start callback:
@@ -94,6 +94,101 @@ function BreadthFirst()
     function isCurrentlyQueued(id, queue)
     {
         return queue.find(function(queuedId) { return queuedId == id}) != undefined;
+    }
+}
+
+function DepthFirst()
+{
+    this.onNodeComplete;
+    this.onCompletion;
+    this.beforeStart;
+
+    // ids = Node IDs to ignore (marked as traversed):
+    DepthFirst.prototype.execute = function(nodes, startId, endId, ids)
+    {
+        // Before Start callback:
+        if (this.beforeStart && this.beforeStart instanceof Function)
+        {
+            this.beforeStart();
+        }
+
+        // Store traversed nodes:
+        var traversed = ids || [];
+        
+        // Stack for nodes:
+        var stack = [];
+        stack.push(startId);
+
+        while (stack.length > 0)
+        {
+            var nextId = stack.pop();
+            var nextNode = nodes.find(function(node) { return node.id == nextId});
+
+            // If next node is found, stack neighbors:
+            if (nextNode)
+            {
+                if (!hasTraversed(nextId, traversed))
+                {
+                    stackNeighbors(stack, nextNode, traversed);
+
+                    traversed.push(nextId);
+
+                    // Node completed, invoke callback if available:
+                    if (this.onNodeComplete && this.onNodeComplete instanceof Function)
+                    {
+                        this.onNodeComplete(nextNode);
+                    }
+
+                    // If we've found the end node, break the loop:
+                    if (nextId == endId)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        console.log(traversed);
+
+        // Algorithm completed successfully, invoke callback if available:
+        if (this.onCompletion && this.onCompletion instanceof Function)
+        {
+            this.onCompletion(traversed);
+        }
+    }
+
+    function stackNeighbors(stack, node, traversed)
+    {
+        if (node.neighbors && node.neighbors.length > 0)
+        {
+            for (var i = 0; i < node.neighbors.length; i++)
+            {
+                var neighbor = node.neighbors[i];
+
+                if (!hasTraversed(neighbor, traversed))
+                {
+                    stack.push(neighbor);
+
+                    // break on first stacked neighbor to continue digging:
+                    break;
+                }
+            }
+
+            // Neighbors discovered, invoke callback if available:
+            if (this.onNeighborDiscovery && this.onNeighborDiscovery instanceof Function)
+            {
+                this.onNeighborDiscovery(node);
+            }
+        }
+    }
+
+    function hasTraversed(id, traversed)
+    {
+        return traversed.find(function(traversedId) { return traversedId == id}) != undefined;
+    }
+
+    function isCurrentlyStacked(id, stack)
+    {
+        return stack.find(function(stackedId) { return stackedId == id}) != undefined;
     }
 }
 
