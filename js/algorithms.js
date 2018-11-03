@@ -240,7 +240,7 @@ function Graph()
 
                 // If id + columns is less than number of cells, link with node in below row:
                 // This is placed at the bottom so the largest neighbor gets added last (sorted)
-                if (node.id + columns < cells)
+                if (node.id + columns <= cells)
                 {
                     node.neighbors.push(node.id + columns);
                 }
