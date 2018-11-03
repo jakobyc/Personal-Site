@@ -24,8 +24,8 @@
             <div id="grid-controls">
                 <h3>Controls:</h3>
                 <ul>
-                    <li>Hold Left Click + Drag = Paint walls</li>
                     <li>Left Click = Set endpoint</li>
+                    <li>Hold Left Click + Drag = Paint walls</li>
                     <li>Left Ctrl + Drag = Remove walls</li>
                 </ul>
             </div>
@@ -197,14 +197,14 @@
         {
             $(document).keydown(function(e)
             {
-                // If left-ctrl is held, enable removing state:
-                if (e.keyCode == 17 || e.which == 17)
+                switch(e.which)
                 {
-                    graph.state = GraphState.state.removing;
-                }
-                else
-                {
-                    graph.state = GraphState.state.ready;
+                    // If left-ctrl is held, enable removing state:
+                    case(17):
+                        graph.state = GraphState.state.removing;
+                        break;
+                    default:
+                        graph.state = GraphState.state.ready;
                 }
             });
 
@@ -216,32 +216,39 @@
 
         function addNodeEventListeners(graph)
         {
-            // Add endpoint and execute algorithm:
              $('.node').click(function(data)
                 {
-                    if (!$(this).hasClass('node-wall'))
+                    var id = $(this).attr('data-id');
+
+                    switch(graph.state)
                     {
-                        // Clear traversed nodes and previous ending node:
-                        $('.node-traversed').removeClass('node-traversed').text('');
-                        $('.node-end').removeClass('node-end').text('');
-
-                        $(this).addClass('node-end');
-                        var id = $(this).attr('data-id');
-
-                        // Ids of walls (exclude from algorithm):
-                        var ids = [];
-                        $.each($('.node-wall'), function()
+                        // Add endpoint and execute algorithm:
+                        default:
+                        if (!$(this).hasClass('node-wall'))
                         {
-                            ids.push($(this).attr('data-id'));
-                        });
+                            // Clear traversed nodes and previous ending node:
+                            $('.node-traversed').removeClass('node-traversed').text('');
+                            $('.node-end').removeClass('node-end').text('');
 
-                        // Execute algorithm:
-                        algorithm.execute(graph.nodes, 1, id, ids);
+                            $(this).addClass('node-end');
+
+                            // Ids of walls (exclude from algorithm):
+                            var ids = [];
+                            $.each($('.node-wall'), function()
+                            {
+                                ids.push($(this).attr('data-id'));
+                            });
+
+                            $('.node').eq(0).addClass('node-start');
+                            // Execute algorithm:
+                            algorithm.execute(graph.nodes, 1, id, ids);
+                        }
+                            break;
                     }
                 });
 
             // Paint walls:
-            $('.node').mouseenter(function()
+            $('.node').hover(function()
             {
                 var node = $(this);
 

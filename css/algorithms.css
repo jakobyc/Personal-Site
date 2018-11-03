@@ -1,6 +1,6 @@
 .node-start
 {
-    background-color: lightgreen;
+    background-color: lightskyblue;
 }
 
 .node-end
@@ -8,7 +8,7 @@
     background-color: lightpink;
 }
 
-.node-traversed:not(.node-end)
+.node-traversed:not(.node-wall):not(.node-end):not(.node-start)
 {
     background-color: lightgreen;
 }
@@ -22,6 +22,11 @@
 {
     min-width: 43px;
     height: 38px;
+}
+
+.node:not(.node-wall):hover
+{
+    background: lightpink;
 }
 
 .grid-icon

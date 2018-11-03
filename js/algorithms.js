@@ -258,4 +258,4 @@ function Graph()
 function GraphState()
 {
 }
-GraphState.state = Object.freeze({"painting":1,  "removing":2, "ready":3});
+GraphState.state = Object.freeze({"painting":1,  "removing":2, "ready":3 });
