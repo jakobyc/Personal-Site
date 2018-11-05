@@ -81,8 +81,30 @@
         var graph = new Graph();
         createGrid(graph, addNodeEventListeners);
         initGridIcons();
+        
+        var iteration = 1,  
+            // Used to control the speed at which the iterations are displayed:
+            renderIter = 0;
+        var algorithm = new BreadthFirst().nodeCompleted(function(node)
+                                                {
+                                                    var speed = $('#speed').val();
 
-        var algorithm = initBreadthFirst();
+                                                    renderIter = renderIter + 1;
+                                                    setTimeout(function()
+                                                    {
+                                                        var htmlNode = $('.node').eq(node.id - 1);
+                                                        htmlNode.addClass('node-traversed');
+                                                        htmlNode.text(iteration);
+                                                        iteration = iteration + 1;
+                                                    }, ((100 - speed) * renderIter));
+                                                })
+                                                .beforeStarting(function()
+                                                {
+                                                    // Reset iteration on execution of algorithm:
+                                                    iteration = 1;
+                                                    renderIter = 0;
+                                                });
+            
         initPainting(graph);
         initRemoving(graph);
 

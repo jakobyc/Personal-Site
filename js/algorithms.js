@@ -1,4 +1,130 @@
+function Algorithm()
+{
+    this.onNodeComplete = new Function();
+    this.onCompletion = new Function();
+    this.onNeighborDiscovery = new Function();
+    this.beforeStart = new Function();
+}
+// Add callbacks with fluent builder pattern:
+Algorithm.prototype.beforeStarting = function(callback)
+{
+    this.beforeStart = callback;
+    
+    return this;
+}
+// Params supported:
+// Array of integers (Traversed node ids)
+Algorithm.prototype.completed = function(callback)
+{
+    this.onCompletion = callback;
+
+    return this;
+}
+// Params supported:
+// Completed node
+Algorithm.prototype.nodeCompleted = function(callback)
+{
+    this.onNodeComplete = callback;
+
+    return this;
+}
+// Params supported:
+// Node with discovered neighbors
+Algorithm.prototype.neighborsDiscovered = function(callback)
+{
+    this.onNeighborDiscovery = callback;
+
+    return this;
+}
+
 function BreadthFirst()
+{
+    Algorithm.call(this);
+}
+
+BreadthFirst.prototype = Object.create(Algorithm.prototype);
+BreadthFirst.prototype.constructor = BreadthFirst;
+
+// ids = Node IDs to ignore (marked as traversed):
+BreadthFirst.prototype.execute = function(nodes, startId, endId, ids)
+{
+    var that = this;
+
+    this.beforeStart();
+
+    // Store traversed nodes:
+    var traversed = ids || [];
+    
+    // Queue for nodes:
+    var queue = [];
+    queue.push(startId);
+
+    while (queue.length > 0)
+    {
+        var nextId = queue.shift();
+        var nextNode = nodes.find(function(node) { return node.id == nextId});
+        
+        // If next node is found, queue neighbors:
+        if (nextNode)
+        {
+            // If we haven't traversed this node yet, traverse it:
+            if (!hasTraversed(nextId, traversed) && !isCurrentlyQueued(nextId, queue))
+            {
+                queueNeighbors(queue, nextNode, traversed);
+            
+                traversed.push(nextId);
+                
+                this.onNodeComplete(nextNode);
+
+                // If we've found the end node, break the loop:
+                if (nextId == endId)
+                {
+                    break;
+                }
+            }
+            else
+            {
+                console.log('Already traversed that node.');
+            }
+        }
+        else
+        {
+            console.log('Node ' + nextId.toString() + ' not found');
+        }
+    }
+
+    // Algorithm completed successfully, invoke callback if available:
+    this.onCompletion(traversed);
+
+        
+    function queueNeighbors(queue, node, traversed)
+    {
+        if (node.neighbors && node.neighbors.length > 0)
+        {
+            node.neighbors.forEach(function(neighbor)
+            {
+                if (!hasTraversed(neighbor, traversed) && !isCurrentlyQueued(neighbor, queue))
+                {
+                    queue.push(neighbor)
+                }
+            });
+
+            that.onNeighborDiscovery(node);
+        }
+    }
+
+    function hasTraversed(id, traversed)
+    {
+        return traversed.find(function(traversedId) { return traversedId == id}) != undefined;
+    }
+
+    function isCurrentlyQueued(id, queue)
+    {
+        return queue.find(function(queuedId) { return queuedId == id}) != undefined;
+    }
+}
+
+/*function BreadthFirst()
 {
     this.onNodeComplete;
     this.onCompletion;
@@ -190,7 +316,7 @@ function DepthFirst()
     {
         return stack.find(function(stackedId) { return stackedId == id}) != undefined;
     }
-}
+}*/
 
 function Node(id, neighbors)
 {
