@@ -1,3 +1,4 @@
+// Algorithm base:
 function Algorithm()
 {
     this.onNodeComplete = new Function();
@@ -37,6 +38,7 @@ Algorithm.prototype.neighborsDiscovered = function(callback)
     return this;
 }
 
+// Breadth First Algorithm:
 function BreadthFirst()
 {
     Algorithm.call(this);
@@ -45,15 +47,14 @@ function BreadthFirst()
 BreadthFirst.prototype = Object.create(Algorithm.prototype);
 BreadthFirst.prototype.constructor = BreadthFirst;
 
-// ids = Node IDs to ignore (marked as traversed):
-BreadthFirst.prototype.execute = function(nodes, startId, endId, ids)
+BreadthFirst.prototype.execute = function(graph, startId, endId, traversedIds)
 {
     var that = this;
 
     this.beforeStart();
 
     // Store traversed nodes:
-    var traversed = ids || [];
+    var traversed = traversedIds || [];
     
     // Queue for nodes:
     var queue = [];
@@ -62,7 +63,7 @@ BreadthFirst.prototype.execute = function(nodes, startId, endId, ids)
     while (queue.length > 0)
     {
         var nextId = queue.shift();
-        var nextNode = nodes.find(function(node) { return node.id == nextId});
+        var nextNode = graph.nodes.find(function(node) { return node.id == nextId});
         
         // If next node is found, queue neighbors:
         if (nextNode)
@@ -95,7 +96,6 @@ BreadthFirst.prototype.execute = function(nodes, startId, endId, ids)
 
     // Algorithm completed successfully, invoke callback if available:
     this.onCompletion(traversed);
-
         
     function queueNeighbors(queue, node, traversed)
     {
@@ -124,92 +124,109 @@ BreadthFirst.prototype.execute = function(nodes, startId, endId, ids)
     }
 }
 
-/*function BreadthFirst()
+// A* Search Algorithm:
+function AStar()
 {
-    this.onNodeComplete;
-    this.onCompletion;
-    this.onNeighborDiscovery;
-    this.beforeStart;
+    this.debug = false;
 
-    // ids = Node IDs to ignore (marked as traversed):
-    BreadthFirst.prototype.execute = function(nodes, startId, endId, ids)
+    Algorithm.call(this);
+}
+
+AStar.prototype = Object.create(Algorithm.prototype);
+AStar.prototype.constructor = AStar;
+
+// Get distance from current to a specific node:
+AStar.prototype.execute = function(graph, startId, endId, traversedIds)
+{
+    this.beforeStart();
+
+    var currentNode = graph.nodes.find(function(node) { return node.id == startId; });
+    // Array of nodes we've already traversed:
+    var traversed = traversedIds || [];
+    while (currentNode)
     {
-        // Before Start callback:
-        if (this.beforeStart && this.beforeStart instanceof Function)
+        if (currentNode && currentNode.id == endId)
         {
-            this.beforeStart();
+            this.onNodeComplete(currentNode);
+            traversed.push(currentNode.id);
+
+            break;
         }
 
-        // Store traversed nodes:
-        var traversed = ids || [];
-        
-        // Queue for nodes:
-        var queue = [];
-        queue.push(startId);
-
-        while (queue.length > 0)
+        if (this.debug)
         {
-            var nextId = queue.shift();
-            var nextNode = nodes.find(function(node) { return node.id == nextId});
-            
-            // If next node is found, queue neighbors:
-            if (nextNode)
-            {
-                // If we haven't traversed this node yet, traverse it:
-                if (!hasTraversed(nextId, traversed) && !isCurrentlyQueued(nextId, queue))
-                {
-                    queueNeighbors(queue, nextNode, traversed);
-                
-                    traversed.push(nextId);
-    
-                    // Node completed, invoke callback if available:
-                    if (this.onNodeComplete && this.onNodeComplete instanceof Function)
-                    {
-                        this.onNodeComplete(nextNode);
-                    }
+            console.log('Ending node: ' + endId);
+        }
 
-                    // If we've found the end node, break the loop:
-                    if (nextId == endId)
-                    {
-                        break;
-                    }
-                }
-                else
-                {
-                    console.log('Already traversed that node.');
-                }
+        var neighborCosts = neighborCosts || [];
+        currentNode.neighbors.forEach(function(neighbor)
+        {
+            // If we haven't traversed neighbor node yet:
+            if (!hasTraversed(neighbor, traversed) && !isCurrentlyAdded(neighbor, neighborCosts))
+            {
+                // Get costs:
+                var gCost = getCost(currentNode.id, neighbor, graph.columns);
+                var hCost = getCost(neighbor, endId, graph.columns);
+                var fCost = gCost + hCost;
+    
+                // Add to neighbor costs so we can compare later to other neighbors:
+                neighborCosts.push({neighbor, fCost});
+            }
+        });
+
+        if (this.debug)
+        {
+            console.log(neighborCosts);
+        }
+        // Neighbor with lowest fCost:
+        var bestNeighbor = undefined;
+        neighborCosts.forEach(function(x)
+        {
+            if (bestNeighbor == undefined || x.fCost < bestNeighbor.fCost)
+            {
+                bestNeighbor = x;
+            }
+        });
+
+        this.onNodeComplete(currentNode);
+        traversed.push(currentNode.id);
+
+        if (bestNeighbor)
+        {
+            neighborCosts = neighborCosts.filter(function(element)
+            {
+                return element.neighbor != bestNeighbor.neighbor;
+            });
+            
+            currentNode = graph.nodes.find(function(node) { return node.id == bestNeighbor.neighbor; });
+        }
+        else
+        {
+            currentNode = undefined;
+        }
+
+        if (this.debug)
+        {
+            if (bestNeighbor)
+            {
+                console.log('Lowest fCost Neighbor: ' + bestNeighbor.neighbor);
             }
             else
             {
-                console.log('Node ' + nextId.toString() + ' not found');
+                console.log('No neighbors available for node');
             }
-        }
-
-        // Algorithm completed successfully, invoke callback if available:
-        if (this.onCompletion && this.onCompletion instanceof Function)
-        {
-            this.onCompletion(traversed);
         }
     }
 
-    function queueNeighbors(queue, node, traversed)
+    this.onCompletion(traversed);
+
+    // Amount of nodes required to traverse from startId to endId:
+    function getCost(startId, endId, columns)
     {
-        if (node.neighbors && node.neighbors.length > 0)
-        {
-            node.neighbors.forEach(function(neighbor)
-            {
-                if (!hasTraversed(neighbor, traversed) && !isCurrentlyQueued(neighbor, queue))
-                {
-                    queue.push(neighbor)
-                }
-            });
-    
-            // Neighbors discovered, invoke callback if available:
-            if (this.onNeighborDiscovery && this.onNeighborDiscovery instanceof Function)
-            {
-                this.onNeighborDiscovery(node);
-            }
-        }
+        var rowShifts = Math.ceil(endId / columns) - Math.ceil(startId / columns)
+        var columnShifts = endId - (startId + (columns * rowShifts));
+
+        return Math.abs(rowShifts) + Math.abs(columnShifts);
     }
 
     function hasTraversed(id, traversed)
@@ -217,12 +234,14 @@ BreadthFirst.prototype.execute = function(nodes, startId, endId, ids)
         return traversed.find(function(traversedId) { return traversedId == id}) != undefined;
     }
 
-    function isCurrentlyQueued(id, queue)
+    function isCurrentlyAdded(id, neighbors)
     {
-        return queue.find(function(queuedId) { return queuedId == id}) != undefined;
+        return neighbors.find(function(neighbor) { return neighbor == id}) != undefined;
     }
 }
 
+// TODO: Refactor similarly to Breadth First
+// Depth First Algorithm:
 function DepthFirst()
 {
     this.onNodeComplete;
@@ -316,7 +335,7 @@ function DepthFirst()
     {
         return stack.find(function(stackedId) { return stackedId == id}) != undefined;
     }
-}*/
+}
 
 function Node(id, neighbors)
 {
@@ -324,13 +343,18 @@ function Node(id, neighbors)
     this.neighbors = neighbors;
 }
 
-function Graph()
+function GridGraph()
 {
     this.nodes = [];
     this.state = GraphState.state.ready;
+    this.columns;
+    this.rows;
 
-    Graph.prototype.createGridGraph = function(columns, rows)
+    GridGraph.prototype.create = function(columns, rows)
     {
+        this.columns = columns;
+        this.rows = rows;
+
         var nodes = [];
         if (columns > 0 && rows > 0)
         {

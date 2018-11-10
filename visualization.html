@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/algorithms.css" />
     <link rel="icon" href="content/favicon.png" type="image/x-icon">
-    <title>Breadth-first Visualization</title>
+    <title>Search Visualization</title>
 </head>
 <body class="theme-background">
     <!--Nav bar -->
@@ -19,7 +19,7 @@
     <br />
     <div class="container">
         <div style="color: white;">
-            <h2>Breadth-first Visualization</h2>
+            <h2>Search Visualization</h2>
             <hr/>
             <div id="grid-controls">
                 <h3>Controls:</h3>
@@ -30,6 +30,13 @@
                 </ul>
             </div>
             <div class="row">
+                <div class="col-sm-2">
+                    <label>Algorithm:</label>
+                    <select id="algorithm" class="form-control">
+                        <option selected>A*</option>
+                        <option>Breadth-First</option>
+                    </select>
+                </div>
                 <div class="col-sm-2">
                     <label>Rows:</label>
                     <input id="rows" class="form-control" value="20">
@@ -78,32 +85,15 @@
         var layout = new Layout();
         layout.load(function() { layout.setActive('#navHome'); });
 
-        var graph = new Graph();
+        var graph = new GridGraph();
         createGrid(graph, addNodeEventListeners);
         initGridIcons();
         
         var iteration = 1,  
             // Used to control the speed at which the iterations are displayed:
             renderIter = 0;
-        var algorithm = new BreadthFirst().nodeCompleted(function(node)
-                                                {
-                                                    var speed = $('#speed').val();
-
-                                                    renderIter = renderIter + 1;
-                                                    setTimeout(function()
-                                                    {
-                                                        var htmlNode = $('.node').eq(node.id - 1);
-                                                        htmlNode.addClass('node-traversed');
-                                                        htmlNode.text(iteration);
-                                                        iteration = iteration + 1;
-                                                    }, ((100 - speed) * renderIter));
-                                                })
-                                                .beforeStarting(function()
-                                                {
-                                                    // Reset iteration on execution of algorithm:
-                                                    iteration = 1;
-                                                    renderIter = 0;
-                                                });
+        var algorithm = new AStar();
+        addAlgorithmCallbacks(algorithm);
             
         initPainting(graph);
         initRemoving(graph);
@@ -116,7 +106,7 @@
             if (rows > 0 && rows <= 25 && columns > 0 && columns <= 25)
             {
                 // Create graph based off input for rows/columns:
-                graph.createGridGraph(parseInt(columns), parseInt(rows));
+                graph.create(parseInt(columns), parseInt(rows));
 
                 // Create table to match the graph:
                 var table = $('#grid');
@@ -165,40 +155,6 @@
                 createGrid(graph, addNodeEventListeners);
             });
         }
-
-        function initBreadthFirst()
-        {
-            var algorithm = new BreadthFirst();
-            var iteration = 1,  
-                // Used to control the speed at which the iterations are displayed:
-                renderIter = 0;
-            algorithm.onNodeComplete = function(node)
-            {
-                var speed = $('#speed').val();
-
-                renderIter = renderIter + 1;
-                setTimeout(function()
-                {
-                    var htmlNode = $('.node').eq(node.id - 1);
-                    htmlNode.addClass('node-traversed');
-                    htmlNode.text(iteration);
-                    iteration = iteration + 1;
-                }, ((100 - speed) * renderIter));
-
-            };
-            algorithm.onCompletion = function(traversed)
-            {
-                //console.log(traversed);
-            };
-            algorithm.beforeStart = function()
-            {
-                // Reset iteration on execution of algorithm:
-                iteration = 1;
-                renderIter = 0;
-            }
-
-            return algorithm;
-        }
         
         // Initialize painting events for walls:
         function initPainting(graph)
@@ -240,7 +196,7 @@
         {
              $('.node').click(function(data)
                 {
-                    var id = $(this).attr('data-id');
+                    var endId = $(this).attr('data-id');
 
                     switch(graph.state)
                     {
@@ -255,15 +211,15 @@
                             $(this).addClass('node-end');
 
                             // Ids of walls (exclude from algorithm):
-                            var ids = [];
+                            var wallIds = [];
                             $.each($('.node-wall'), function()
                             {
-                                ids.push($(this).attr('data-id'));
+                                wallIds.push($(this).attr('data-id'));
                             });
 
                             $('.node').eq(0).addClass('node-start');
                             // Execute algorithm:
-                            algorithm.execute(graph.nodes, 1, id, ids);
+                            algorithm.execute(graph, 1, endId, wallIds);
                         }
                             break;
                     }
@@ -283,6 +239,44 @@
                         node.removeClass('node-wall')
                         break;
                 }
+            });
+        }
+
+        $('#algorithm').change(function()
+        {
+            switch($(this)[0].selectedIndex)
+            {
+                case(0):
+                algorithm = new AStar();
+                addAlgorithmCallbacks(algorithm);
+                break;
+                case(1):
+                algorithm = new BreadthFirst();
+                addAlgorithmCallbacks(algorithm);
+                    break;
+            }
+        });
+
+        function addAlgorithmCallbacks(algorithm)
+        {
+            algorithm.nodeCompleted(function(node)
+            {
+                var speed = $('#speed').val();
+
+                renderIter = renderIter + 1;
+                setTimeout(function()
+                {
+                    var htmlNode = $('.node').eq(node.id - 1);
+                    htmlNode.addClass('node-traversed');
+                    htmlNode.text(iteration);
+                    iteration = iteration + 1;
+                }, ((100 - speed) * renderIter));
+            })
+            .beforeStarting(function()
+            {
+                // Reset iteration on execution of algorithm:
+                iteration = 1;
+                renderIter = 0;
             });
         }
     });
