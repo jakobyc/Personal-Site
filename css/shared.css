@@ -1,4 +1,11 @@
-﻿.image-responsive
+﻿.equal-height
+{
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+}
+
+.image-responsive
 {
     height: auto;
     width: 100%;
@@ -107,5 +114,10 @@
     .hide-mobile
     {
         display: none !important;
+    }
+
+    .mobile-w-100
+    {
+        width: 100%;
     }
 }
