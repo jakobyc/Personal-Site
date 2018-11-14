@@ -25,7 +25,7 @@
 
 @media (max-width: 500px) 
 {
-    #hiking-parallax 
+    #hiking-parallax, #hiking-parallax-caption
     {
         display: none;
     }

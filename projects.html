@@ -25,6 +25,14 @@
     <div class="container">
         <h1 class="theme-content-header">Projects</h1>
         <div>
+            <div id="loader-container" style="display: none;">
+                <div id="loader">
+                    <div class="loading-circle"></div>
+                    <div class="loading-circle"></div>
+                    <div class="loading-circle"></div>
+                </div>
+                <h3 style="color: white;">Loading...</h3>
+            </div>
             <ul class="list-group" id="repos">
                 
             </ul>
@@ -63,6 +71,9 @@
          var layout = new Layout();
         layout.load(function() { layout.setActive('#navProjects'); });
 
+        var loader = $('#loader-container');
+        loader.show();
+
         var github = new GitHub();
         github.getRepos("jakobyc", format);
 
@@ -84,6 +95,8 @@
                     $('#repos').append(template);
                 });
             }
+
+            loader.hide();
         }
     });
 </script>
