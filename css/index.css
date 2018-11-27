@@ -1,24 +1,11 @@
-﻿#hiking-parallax
-{
-    background-image: url(../content/hiking1.jpg);
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    border: 1px solid #222222;
-    height: 500px;
-    width: 100%;
-}
-
-#hiking-parallax-caption
+﻿#hiking-image-caption
 {
     opacity: 0;
     -webkit-transition: ease-in-out 1s;
     transition: ease-in-out 1s;
 }
 
-#hiking-parallax:hover + #hiking-parallax-caption
+#hiking-image:hover + #hiking-image-caption
 {
     opacity: 1;
 }
