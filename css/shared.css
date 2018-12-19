@@ -69,7 +69,7 @@
 
 .hide-mobile 
 {
-    display: initial;
+    display: block;
 }
 
 .column-container
