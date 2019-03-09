@@ -64,6 +64,16 @@
     color: white;
 }
 
+.theme-bg
+{
+    background-color: #222222;
+}
+
+.theme-color
+{
+    color: white;
+}
+
 .theme-social-git
 {
     background: transparent;
