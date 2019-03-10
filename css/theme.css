@@ -77,13 +77,19 @@
 .theme-social-git
 {
     background: transparent;
-    color: #83168e !important;
+    color: #83168e;
+}
+
+.theme-social-git:hover,
+.theme-social-linkedin:hover
+{
+    color: white;
 }
 
 .theme-social-linkedin 
 {
     background: transparent;
-    color: #3570b3 !important;
+    color: #3570b3;
 }
 
 .theme-tab

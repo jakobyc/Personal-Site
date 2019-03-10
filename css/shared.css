@@ -25,11 +25,26 @@
     left: 16px;
 }
 
+.image-text-top-centered
+{
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .image-text-top-left
 {
     position: absolute;
     top: 8px;
     left: 16px;
+}
+
+.image-text-top-right 
+{
+    position: absolute;
+    top: 8px;
+    right: 16px;
 }
 
 .image-text-bottom-right
@@ -39,11 +54,12 @@
     right: 16px;
 }
 
-.image-text-top-right 
+.image-text-bottom-centered
 {
     position: absolute;
-    top: 8px;
-    right: 16px;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .image-text-centered

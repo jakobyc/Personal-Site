@@ -79,6 +79,12 @@ body
     margin-bottom: 0px;
 }
 
+/* Bootstrap override: */
+.navbar-brand
+{
+    font-size: 1.15rem;
+}
+
 .navbar-dropdown-item
 {
     font-size: 16px;
@@ -115,6 +121,12 @@ body
 {
     background-color: white !important;
     color: #222222;
+}
+
+.nav-link:hover,
+.navbar-brand:hover
+{
+    font-weight: 600;
 }
 
 #nav-name 
