@@ -23,6 +23,11 @@
     height: 38px;
 }
 
+td.node
+{
+    padding: 0;
+}
+
 .node:not(.node-wall):hover
 {
     background: lightpink;
