@@ -22,7 +22,7 @@
             <hr style="border: 1px solid white"/>
             <h4>Software Engineer and Technology Enthusiast</h4>
         </div>
-        <div class="image-text-bottom-centered" style="color: black;">
+        <div class="image-text-bottom-centered" id="read-more" style="color: black; cursor: pointer;">
             <br/><br/>
             <h3>Read More</h3>
             <span class="fa fa-chevron-circle-down fa-2x"></span>
@@ -34,15 +34,9 @@
     <div class="container">
         <br/>
 
-        <div class="column-container theme-column-container" id="info2">
-            <div class="column-icon">
-                <span id="info2-icon" class="fa fa-chevron-circle-down"></span>
-            </div>
-            <div class="column">
-                <p>What kind of development?</p>
-            </div>
-        </div>
         <div class="theme-content-dark" id="info2-content">
+            <h3>Experience</h3>
+            <br/>
             <div class="row equal-height text-center" style="padding-bottom: 5px;">
                 <div class="col-sm-4 theme-text-area">
                     <h1 class="devicon-csharp-plain colored"></h1>
@@ -105,19 +99,8 @@
             </div>
         </div>
 
-        <div class="column-container theme-column-container" id="info3">
-            <div class="column-icon">
-                <span id="info3-icon" class="fa fa-chevron-circle-down"></span>
-            </div>
-            <div class="column">
-                <p>Anything else?</p>
-            </div>
-        </div>
+        <br/>
         <div class="theme-content-dark" id="info3-content">
-            <p>
-                I enjoy working on some personal projects. Several are on my <a class="btn theme-btn-git" href="https://github.com/jakobyc" target="_blank">GitHub</a>. Feel free
-                to check them out and contribute.
-            </p>
             <br/>
             <div class="row">
                 <div class="col-sm-3 col-sm-offset-2">
@@ -149,28 +132,13 @@
     $(document).ready(function()
     {
         var layout = new Layout();
-        layout.load(function() { layout.setActive('#navHome'); });
+        layout.load(function() { layout.setActive('#nav-name'); });
 
-        collapse('#info', '#info-content', function() {
-            toggleArrow('#info-icon');
-         }
-        );
-
-        collapse('#info2', '#info2-content', function() {
-            toggleArrow('#info2-icon');
-         }
-        );
-
-        collapse('#info3', '#info3-content', function() {
-            toggleArrow('#info3-icon');
-         }
-        );
-
-        function toggleArrow(element)
+        $('#read-more').click(function()
         {
-            $(element).toggleClass('fa-chevron-circle-down');
-            $(element).toggleClass('fa-chevron-circle-right');
-        };
-    });
+            var height = $(window).height();
 
+            $('html, body').animate({ scrollTop:  $('#info2-content').offset().top - 50 }, 'slow');
+        });
+    });
 </script>
