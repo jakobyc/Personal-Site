@@ -170,7 +170,7 @@ AStar.prototype.execute = function(graph, startId, endId, traversedIds)
                 var fCost = gCost + hCost;
     
                 // Add to neighbor costs so we can compare later to other neighbors:
-                neighborCosts.push({neighbor, fCost});
+                neighborCosts.push({neighbor: neighbor, fCost: fCost});
             }
         });
 
